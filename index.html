@@ -1,0 +1,2890 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minna no Nihongo I — Hành Trình Chinh Phục Phú Sĩ</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e2b4d'/%3E%3Cpolygon points='8,48 32,14 56,48' fill='%23334b7a'/%3E%3Cpolygon points='23,26.8 32,14 41,26.8 36,24.5 32,28.5 28,24.5' fill='%23ffffff'/%3E%3C/svg%3E">
+  <!-- Google Fonts với danh sách font dự phòng khi offline -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & BIẾN THEME (SÁNG: BÌNH MINH / TỐI: ĐÊM TUYẾT)
+       ========================================================================== */
+    :root {
+      --font-serif: 'Noto Serif JP', 'Times New Roman', Georgia, serif;
+      --font-sans: 'Be Vietnam Pro', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      /* Theme Sáng (Mặc định - Bình minh Phú Sĩ) */
+      --sky-top: #5d7ea6;
+      --sky-mid: #e6a89c;
+      --sky-bottom: #f9e4c8;
+      --sun-color: #d93829;
+      --fuji-dark: #2c4268;
+      --fuji-light: #415d8c;
+      --snow-cap: #ffffff;
+      --hill-1: #364f6b;
+      --hill-2: #24364d;
+      --mist-color: rgba(255, 245, 235, 0.55);
+
+      /* Giao diện thẻ kính mờ */
+      --card-bg: rgba(255, 255, 255, 0.84);
+      --card-bg-elevated: rgba(255, 255, 255, 0.94);
+      --card-border: rgba(44, 66, 104, 0.16);
+      --card-shadow: 0 10px 30px rgba(24, 38, 64, 0.12);
+
+      /* Chữ & Điểm nhấn */
+      --text-primary: #162238;
+      --text-secondary: #3d4f6f;
+      --text-muted: #627391;
+      --indigo-primary: #264373;
+      --indigo-hover: #1b3156;
+      --torii-red: #c9372c;
+      --torii-red-hover: #a8281e;
+      --success-color: #15803d;
+      --success-bg: rgba(21, 128, 61, 0.12);
+      --error-color: #b91c1c;
+      --error-bg: rgba(185, 28, 28, 0.12);
+      --badge-bg: rgba(38, 67, 115, 0.1);
+    }
+
+    [data-theme="dark"] {
+      /* Theme Tối (Đêm tuyết Phú Sĩ) */
+      --sky-top: #070b14;
+      --sky-mid: #101d36;
+      --sky-bottom: #1b3154;
+      --sun-color: #f4f1de; /* Mặt trăng mờ */
+      --fuji-dark: #131f38;
+      --fuji-light: #22355c;
+      --snow-cap: #e2e8f0;
+      --hill-1: #0e1729;
+      --hill-2: #080e1a;
+      --mist-color: rgba(27, 49, 84, 0.45);
+
+      /* Giao diện thẻ kính mờ tối */
+      --card-bg: rgba(15, 24, 42, 0.80);
+      --card-bg-elevated: rgba(22, 34, 58, 0.92);
+      --card-border: rgba(226, 232, 240, 0.15);
+      --card-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+
+      /* Chữ & Điểm nhấn */
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --indigo-primary: #60a5fa;
+      --indigo-hover: #93c5fd;
+      --torii-red: #ef4444;
+      --torii-red-hover: #f87171;
+      --success-color: #4ade80;
+      --success-bg: rgba(74, 222, 128, 0.15);
+      --error-color: #f87171;
+      --error-bg: rgba(248, 113, 113, 0.15);
+      --badge-bg: rgba(96, 165, 250, 0.15);
+    }
+
+    /* ==========================================================================
+       2. RESET & CƠ BẢN
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background-color: var(--sky-top);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: all 0.2s ease;
+    }
+
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--torii-red);
+      outline-offset: 2px;
+    }
+
+    ruby {
+      ruby-align: center;
+    }
+
+    rt {
+      font-size: 0.55em;
+      color: var(--text-secondary);
+      font-weight: 400;
+      user-select: none;
+    }
+
+    body.hide-furigana rt {
+      visibility: hidden;
+    }
+
+    .jp-text {
+      font-family: 'Noto Sans JP', var(--font-sans);
+    }
+
+    .serif-title {
+      font-family: var(--font-serif);
+    }
+
+    /* ==========================================================================
+       3. NỀN NÚI PHÚ SĨ & HIỆU ỨNG TUYẾT RƠI
+       ========================================================================== */
+    #fuji-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 58%, var(--sky-bottom) 100%);
+      transition: background 0.6s ease;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    #stars-layer {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    [data-theme="dark"] #stars-layer {
+      opacity: 1;
+    }
+
+    .star {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: twinkle var(--dur, 4s) infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.15; transform: scale(0.85); }
+      100% { opacity: 0.9; transform: scale(1.15); }
+    }
+
+    #fuji-svg {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      min-width: 900px;
+      height: 100%;
+      max-height: 100vh;
+    }
+
+    .parallax-layer {
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .parallax-layer {
+        transform: none !important;
+      }
+      .star {
+        animation: none !important;
+      }
+    }
+
+    #snow-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       4. BỐ CỤC CHÍNH (APP SHELL)
+       ========================================================================== */
+    #app-wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 12px 16px 84px; /* Chừa đáy cho bottom nav trên mobile */
+    }
+
+    @media (min-width: 900px) {
+      #app-wrapper {
+        padding: 16px 24px 28px;
+      }
+    }
+
+    /* Thẻ kính mờ chuẩn */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Thanh trên cùng (Header) */
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 18px;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--torii-red);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgba(201, 55, 44, 0.35);
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1 1 220px;
+      max-width: 380px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg-elevated);
+      font-size: 0.9rem;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      font-weight: 500;
+      min-height: 38px;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--indigo-primary);
+    }
+
+    /* Thanh cảnh báo TTS nếu thiếu giọng tiếng Nhật */
+    #tts-warning {
+      display: none;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      background: var(--error-bg);
+      border: 1px solid var(--error-color);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Lưới nội dung chính: Sidebar (Desktop) + Main Content */
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      flex: 1;
+    }
+
+    @media (min-width: 900px) {
+      .workspace {
+        grid-template-columns: 270px 1fr;
+        align-items: start;
+      }
+    }
+
+    /* Sidebar Desktop */
+    .sidebar {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 110px);
+    }
+
+    @media (min-width: 900px) {
+      .sidebar {
+        display: flex;
+      }
+    }
+
+    .nav-group-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .nav-btn:hover {
+      background: var(--badge-bg);
+      color: var(--text-primary);
+    }
+
+    .nav-btn.active {
+      background: var(--indigo-primary);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    [data-theme="dark"] .nav-btn.active {
+      color: #0b1324;
+    }
+
+    .lesson-scroll-list {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-right: 4px;
+      max-height: 48vh;
+    }
+
+    .lesson-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .lesson-item-btn:hover:not(:disabled) {
+      background: var(--badge-bg);
+    }
+
+    .lesson-item-btn.active {
+      background: var(--torii-red);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .lesson-item-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .lesson-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 24px;
+      border-radius: 7px;
+      background: var(--badge-bg);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .lesson-item-btn.active .lesson-num-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    /* Thanh điều hướng dưới cùng cho Mobile */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 4px;
+      background: var(--card-bg-elevated);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (min-width: 900px) {
+      .mobile-bottom-nav {
+        display: none;
+      }
+    }
+
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      min-width: 60px;
+    }
+
+    .mobile-nav-item.active {
+      color: var(--torii-red);
+    }
+
+    /* Khu vực nội dung chính */
+    .main-stage {
+      padding: 20px;
+      min-height: 70vh;
+      animation: fadeSlideIn 0.22s ease-out;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       5. CÁC THÀNH PHẦN GIAO DIỆN HỌC TẬP
+       ========================================================================== */
+    .btn-primary {
+      background: var(--torii-red);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(201, 55, 44, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--torii-red-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--badge-bg);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary:hover {
+      background: var(--indigo-primary);
+      color: #fff;
+    }
+
+    [data-theme="dark"] .btn-secondary:hover {
+      color: #0b1324;
+    }
+
+    /* Sub-tabs trong bài học */
+    .sub-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .sub-tab {
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      color: var(--text-secondary);
+      background: transparent;
+    }
+
+    .sub-tab.active {
+      background: var(--indigo-primary);
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .sub-tab.active {
+      color: #0b1324;
+    }
+
+    /* Thẻ từ vựng & Flashcard */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .vocab-card {
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .vocab-card.mastered {
+      border-color: var(--success-color);
+      background: linear-gradient(135deg, var(--card-bg-elevated), var(--success-bg));
+    }
+
+    .vocab-jp {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .vocab-romaji {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .vocab-vi {
+      font-size: 0.98rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--badge-bg);
+      color: var(--indigo-primary);
+    }
+
+    /* Flashcard lật */
+    .flashcard-stage {
+      perspective: 1000px;
+      max-width: 460px;
+      margin: 20px auto;
+    }
+
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      min-height: 240px;
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .flashcard-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      background: var(--card-bg-elevated);
+      border: 2px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+    }
+
+    .flashcard-back {
+      transform: rotateY(180deg);
+      border-color: var(--indigo-primary);
+    }
+
+    /* Hội thoại bong bóng chat */
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .chat-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .chat-bubble {
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      border-top-left-radius: 4px;
+      padding: 12px 16px;
+      flex: 1;
+    }
+
+    .shadowing-blur .jp-line {
+      filter: blur(7px);
+      user-select: none;
+      transition: filter 0.2s;
+    }
+
+    .shadowing-blur .jp-line:hover,
+    .shadowing-blur .jp-line:active {
+      filter: none;
+    }
+
+    /* Ngữ pháp */
+    .grammar-card {
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .grammar-formula {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--torii-red);
+      margin-bottom: 4px;
+    }
+
+    /* Luyện tập & Quiz */
+    .quiz-option {
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1.5px solid var(--card-border);
+      background: var(--card-bg-elevated);
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quiz-option:hover:not(:disabled) {
+      border-color: var(--indigo-primary);
+    }
+
+    .quiz-option.correct {
+      border-color: var(--success-color);
+      background: var(--success-bg);
+      font-weight: 600;
+    }
+
+    .quiz-option.wrong {
+      border-color: var(--error-color);
+      background: var(--error-bg);
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 48px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1.5px dashed var(--card-border);
+      background: var(--card-bg);
+      margin-bottom: 12px;
+    }
+
+    .word-chip {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--indigo-primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    [data-theme="dark"] .word-chip {
+      color: #0b1324;
+    }
+
+    /* Bảng chữ cái Kana */
+    .kana-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .kana-cell {
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .kana-cell:hover:not(.empty) {
+      border-color: var(--torii-red);
+      transform: translateY(-2px);
+    }
+
+    .kana-cell.empty {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .kana-char {
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .kana-rom {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Bảng cuộn ngang an toàn */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin: 12px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+      background: var(--card-bg-elevated);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--card-border);
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--badge-bg);
+      font-weight: 700;
+    }
+
+    /* Modal / Drawer chọn bài trên Mobile */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 500px;
+      max-height: 82vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       LỚP 1: NỀN NÚI PHÚ SĨ & BẦU TRỜI
+       ======================================================================== -->
+  <div id="fuji-backdrop" aria-hidden="true">
+    <div id="stars-layer"></div>
+    <svg id="fuji-svg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="fujiBodyGrad" x1="0%" y1="0%" x2="100%" y2="20%">
+          <stop offset="0%" style="stop-color: var(--fuji-light)" />
+          <stop offset="55%" style="stop-color: var(--fuji-dark)" />
+          <stop offset="100%" style="stop-color: var(--fuji-dark)" />
+        </linearGradient>
+        <linearGradient id="mistGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="transparent" />
+          <stop offset="50%" style="stop-color: var(--mist-color)" />
+          <stop offset="100%" stop-color="transparent" />
+        </linearGradient>
+      </defs>
+
+      <!-- Mặt trời bình minh / Mặt trăng đêm -->
+      <circle cx="960" cy="230" r="64" style="fill: var(--sun-color); opacity: 0.85;" />
+
+      <!-- Thân núi Phú Sĩ (lớp xa, dịch chuyển chậm) -->
+      <g class="parallax-layer" data-depth="0.015">
+        <!-- Dáng núi đối xứng với hai sườn hơi lõm và đỉnh phẳng nhẹ -->
+        <path d="M 140 760 Q 480 620 655 290 L 785 290 Q 960 620 1300 760 Z" fill="url(#fujiBodyGrad)" />
+        <!-- Chỏm tuyết trắng răng cưa tự nhiên -->
+        <path d="M 655 290 L 785 290 Q 825 365 865 435 L 835 415 L 810 455 L 780 410 L 750 465 L 720 415 L 690 460 L 660 410 L 625 445 L 595 415 Q 630 355 655 290 Z"
+              style="fill: var(--snow-cap); opacity: 0.95;" />
+      </g>
+
+      <!-- Lớp sương mỏng ở chân núi -->
+      <rect x="0" y="540" width="1440" height="160" fill="url(#mistGrad)" />
+
+      <!-- Lớp đồi xa -->
+      <g class="parallax-layer" data-depth="0.03">
+        <path d="M -50 720 Q 320 570 720 670 T 1500 630 L 1500 820 L -50 820 Z" style="fill: var(--hill-1); opacity: 0.85;" />
+      </g>
+
+      <!-- Lớp đồi gần + Rừng thông silhouette + Cổng Torii đỏ son -->
+      <g class="parallax-layer" data-depth="0.05">
+        <path d="M -50 760 Q 420 660 880 730 T 1500 690 L 1500 820 L -50 820 Z" style="fill: var(--hill-2);" />
+        
+        <!-- Rừng thông tối giản bên trái -->
+        <g style="fill: var(--hill-2);">
+          <polygon points="110,735 128,675 146,735" />
+          <polygon points="135,740 158,660 181,740" />
+          <polygon points="170,745 190,685 210,745" />
+          <polygon points="210,750 238,655 266,750" />
+        </g>
+
+        <!-- Cổng Torii nhỏ màu đỏ son ở góc phải làm điểm nhấn -->
+        <g transform="translate(1220, 645) scale(0.85)" style="fill: var(--torii-red);">
+          <!-- Xà trên cùng (Kasagi) -->
+          <path d="M 0 8 Q 55 16 110 8 L 106 17 Q 55 23 4 17 Z" />
+          <!-- Xà phụ thứ hai (Nuki) -->
+          <rect x="14" y="28" width="82" height="7" rx="2" />
+          <!-- Hai cột trụ (Hashira) -->
+          <rect x="24" y="15" width="9" height="68" />
+          <rect x="77" y="15" width="9" height="68" />
+          <!-- Đế cột -->
+          <rect x="21" y="76" width="15" height="7" rx="1" style="fill: #1a202c;" />
+          <rect x="74" y="76" width="15" height="7" rx="1" style="fill: #1a202c;" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ========================================================================
+       LỚP 2: CANVAS TUYẾT RƠI 3 TẦNG ĐỘ SÂU
+       ======================================================================== -->
+  <canvas id="snow-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========================================================================
+       LỚP 3: GIAO DIỆN HỌC TẬP
+       ======================================================================== -->
+  <div id="app-wrapper">
+    <!-- Thanh Header -->
+    <header class="top-bar glass-card">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">富</div>
+        <div class="brand-text">
+          <h1 class="serif-title">Minna no Nihongo I</h1>
+          <span>Sơ cấp N5 · Hành trình Phú Sĩ</span>
+        </div>
+      </div>
+
+      <!-- Tìm kiếm toàn cục -->
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input id="global-search-input" type="search" placeholder="Tìm kana, kanji, tiếng Việt..." aria-label="Tìm kiếm từ vựng và ngữ pháp" />
+      </div>
+
+      <!-- Nút điều khiển tuyết & theme -->
+      <div class="header-controls">
+        <button id="snow-toggle-btn" class="icon-btn" aria-label="Điều chỉnh tuyết rơi" title="Chế độ tuyết rơi">
+          ❄️ <span id="snow-mode-label">Vừa</span>
+        </button>
+        <button id="theme-toggle-btn" class="icon-btn" aria-label="Chuyển giao diện sáng hoặc tối" title="Đổi giao diện Sáng / Tối">
+          <span id="theme-icon">🌅</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Cảnh báo giọng đọc tiếng Nhật nếu thiếu -->
+    <div id="tts-warning" role="status">
+      <span>⚠️ Thiết bị của bạn chưa có gói giọng tiếng Nhật (ja-JP). Hãy vào <b>Cài đặt &gt; Ngôn ngữ &amp; Nhập liệu &gt; Chuyển văn bản thành giọng nói</b> để tải tiếng Nhật.</span>
+      <button onclick="document.getElementById('tts-warning').style.display='none'" class="btn-secondary" style="padding: 4px 10px;">Đã hiểu</button>
+    </div>
+
+    <!-- Khu vực làm việc chính -->
+    <div class="workspace">
+      <!-- Thanh bên Desktop -->
+      <aside class="sidebar glass-card" aria-label="Điều hướng chính">
+        <div>
+          <div class="nav-group-title">Công cụ học tập</div>
+          <button class="nav-btn" data-view="prep">📘 Bài chuẩn bị (Mở đầu)</button>
+          <button class="nav-btn" data-view="kana">あ Bảng chữ cái Kana</button>
+          <button class="nav-btn" data-view="reference">📚 Tra cứu ngữ pháp</button>
+          <button class="nav-btn" data-view="progress">🏔️ Tiến độ leo núi</button>
+        </div>
+
+        <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+          <div class="nav-group-title" style="margin-top: 8px;">Giáo trình 25 Bài</div>
+          <div id="desktop-lesson-list" class="lesson-scroll-list"></div>
+        </div>
+      </aside>
+
+      <!-- Khung nội dung động -->
+      <main id="main-content" class="main-stage glass-card" aria-live="polite"></main>
+    </div>
+  </div>
+
+  <!-- Thanh điều hướng dưới cùng trên Mobile -->
+  <nav class="mobile-bottom-nav" aria-label="Điều hướng di động">
+    <button class="mobile-nav-item" id="mob-lessons-btn">
+      <span>📖</span><span>25 Bài</span>
+    </button>
+    <button class="mobile-nav-item" data-view="prep">
+      <span>📘</span><span>Mở đầu</span>
+    </button>
+    <button class="mobile-nav-item" data-view="kana">
+      <span>あ</span><span>Chữ cái</span>
+    </button>
+    <button class="mobile-nav-item" data-view="reference">
+      <span>📚</span><span>Tra cứu</span>
+    </button>
+    <button class="mobile-nav-item" data-view="progress">
+      <span>🏔️</span><span>Tiến độ</span>
+    </button>
+  </nav>
+
+  <!-- Modal chọn bài trên Mobile -->
+  <div id="mobile-lesson-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Chọn bài học">
+    <div class="modal-box glass-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h2 class="serif-title" style="font-size: 1.15rem;">Danh sách 25 Bài</h2>
+        <button id="close-lesson-modal" class="icon-btn" aria-label="Đóng danh sách bài">✕</button>
+      </div>
+      <div id="mobile-lesson-list" style="display: flex; flex-direction: column; gap: 6px;"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       MODULE 1: DỮ LIỆU GIÁO TRÌNH (BÀI CHUẨN BỊ, BẢNG CHỮ CÁI, 25 BÀI)
+       ========================================================================== */
+
+    // Danh sách nhân vật sách Minna no Nihongo I với màu avatar riêng
+    const CHARACTERS = {
+      "Mike Miller": { abbr: "MM", color: "#2563eb" },
+      "Miller": { abbr: "MM", color: "#2563eb" },
+      "Sato Keiko": { abbr: "SK", color: "#db2777" },
+      "Sato": { abbr: "SK", color: "#db2777" },
+      "Hose Santos": { abbr: "HS", color: "#059669" },
+      "Santos": { abbr: "HS", color: "#059669" },
+      "Maria Santos": { abbr: "MS", color: "#7c3aed" },
+      "Karina": { abbr: "KR", color: "#d97706" },
+      "Wang Shue": { abbr: "WS", color: "#dc2626" },
+      "Wang": { abbr: "WS", color: "#dc2626" },
+      "Yamada Ichiro": { abbr: "YI", color: "#0891b2" },
+      "Yamada": { abbr: "YI", color: "#0891b2" },
+      "Yamada Tomoko": { abbr: "YT", color: "#e11d48" },
+      "Matsumoto Tadashi": { abbr: "MT", color: "#4f46e5" },
+      "Matsumoto": { abbr: "MT", color: "#4f46e5" },
+      "Kimura Izumi": { abbr: "KI", color: "#9333ea" },
+      "Watt": { abbr: "WT", color: "#475569" },
+      "Schmidt": { abbr: "SC", color: "#0d9488" },
+      "Lee": { abbr: "LE", color: "#b45309" },
+      "Teresa": { abbr: "TR", color: "#ec4899" },
+      "Gupta": { abbr: "GP", color: "#16a34a" },
+      "Thawaphon": { abbr: "TW", color: "#ea580c" }
+    };
+
+    // Dữ liệu Bảng chữ cái Hiragana & Katakana (Thanh âm, Âm đục, Bán đục, Âm ghép)
+    const KANA_DATA = {
+      basic: [
+        ["あ","ア","a"],["い","イ","i"],["う","ウ","u"],["え","エ","e"],["お","オ","o"],
+        ["か","カ","ka"],["き","キ","ki"],["く","ク","ku"],["け","ケ","ke"],["こ","コ","ko"],
+        ["さ","サ","sa"],["し","シ","shi"],["す","ス","su"],["せ","セ","se"],["そ","ソ","so"],
+        ["た","タ","ta"],["ち","チ","chi"],["つ","ツ","tsu"],["て","テ","te"],["と","ト","to"],
+        ["な","ナ","na"],["に","ニ","ni"],["ぬ","ヌ","nu"],["ね","ネ","ne"],["の","ノ","no"],
+        ["は","ハ","ha"],["ひ","ヒ","hi"],["ふ","フ","fu"],["へ","ヘ","he"],["ほ","ホ","ho"],
+        ["ま","マ","ma"],["み","ミ","mi"],["む","ム","mu"],["め","メ","me"],["も","モ","mo"],
+        ["や","ヤ","ya"],["","",""],["ゆ","ユ","yu"],["","",""],["よ","ヨ","yo"],
+        ["ら","ラ","ra"],["り","リ","ri"],["る","ル","ru"],["れ","レ","re"],["ろ","ロ","ro"],
+        ["わ","ワ","wa"],["","",""],["を","ヲ","wo"],["","",""],["ん","ン","n"]
+      ],
+      dakuten: [
+        ["が","ガ","ga"],["ぎ","ギ","gi"],["ぐ","グ","gu"],["げ","ゲ","ge"],["ご","ゴ","go"],
+        ["ざ","ザ","za"],["じ","ジ","ji"],["ず","ズ","zu"],["ぜ","ゼ","ze"],["ぞ","ゾ","zo"],
+        ["だ","ダ","da"],["ぢ","ヂ","ji"],["づ","ヅ","zu"],["で","デ","de"],["ど","ド","do"],
+        ["ば","バ","ba"],["び","ビ","bi"],["ぶ","ブ","bu"],["べ","ベ","be"],["ぼ","ボ","bo"],
+        ["ぱ","パ","pa"],["ぴ","ピ","pi"],["ぷ","プ","pu"],["ぺ","ペ","pe"],["ぽ","ポ","po"]
+      ],
+      yoon: [
+        ["きゃ","キャ","kya"],["きゅ","キュ","kyu"],["きょ","キョ","kyo"],
+        ["しゃ","シャ","sha"],["しゅ","シュ","shu"],["しょ","ショ","sho"],
+        ["ちゃ","チャ","cha"],["ちゅ","チュ","chu"],["ちょ","チョ","cho"],
+        ["にゃ","ニャ","nya"],["にゅ","ニュ","nyu"],["にょ","ニョ","nyo"],
+        ["ひゃ","ヒャ","hya"],["ひゅ","ヒュ","hyu"],["ひょ","ヒョ","hyo"],
+        ["みゃ","ミャ","mya"],["みゅ","ミュ","myu"],["みょ","ミョ","myo"],
+        ["りゃ","リャ","rya"],["りゅ","リュ","ryu"],["りょ","リョ","ryo"],
+        ["ぎゃ","ギャ","gya"],["ぎゅ","ギュ","gyu"],["ぎょ","ギョ","gyo"],
+        ["じゃ","ジャ","ja"],["じゅ","ジュ","ju"],["じょ","ジョ","jo"],
+        ["びゃ","ビャ","bya"],["びゅ","ビュ","byu"],["びょ","ビョ","byo"],
+        ["ぴゃ","ピャ","pya"],["ぴゅ","ピュ","pyu"],["ぴょ","ピョ","pyo"]
+      ],
+      confusableTips: {
+        "し": "「し」(shi) cong giống móc câu hướng sang phải, khác với 「つ」(tsu) nằm ngang như lưỡi câu.",
+        "つ": "「つ」(tsu) uốn cong ngang từ trái sang phải, đừng nhầm với 「し」(shi) dựng đứng.",
+        "シ": "「シ」(shi) có 3 nét: hai chấm thẳng đứng bên trái và nét hất từ DƯỚI LÊN trên (nhìn như mặt cười nghiêng).",
+        "ツ": "「ツ」(tsu) có 3 nét: hai chấm nằm ngang bên trên và nét phẩy từ TRÊN XUỐNG dưới.",
+        "ソ": "「ソ」(so) có 1 chấm trên và 1 nét phẩy từ TRÊN XUỐNG dưới (giống chữ ツ bỏ 1 chấm).",
+        "ン": "「ン」(n) có 1 chấm bên trái và 1 nét hất từ DƯỚI LÊN trên (giống chữ シ bỏ 1 chấm).",
+        "ぬ": "「ぬ」(nu) có vòng xoắn đuôi ở cuối, khác với 「め」(me) không có vòng xoắn đuôi.",
+        "め": "「め」(me) không có nút thắt ở đuôi như 「ぬ」(nu).",
+        "わ": "「わ」(wa) bụng tròn trơn ở bên phải, khác với 「れ」(re) hất ra ngoài và 「ね」(ne) có vòng xoắn."
+      }
+    };
+
+    // Nội dung "Bài chuẩn bị" theo sách Minna no Nihongo I
+    const PREP_LESSON = {
+      pronunciation: [
+        { title: "1. Chữ viết & Nguyên âm", desc: "Tiếng Nhật dùng 3 loại chữ: Hiragana, Katakana và Kanji (chữ Hán). Có 5 nguyên âm cơ bản: あ (a), い (i), う (u), え (e), お (o)." },
+        { title: "2. Âm đục (濁音) & Bán đục (半濁音)", desc: "Thêm dấu ゛ (tenten) vào các hàng か, さ, た, は để tạo âm đục (が, ざ, だ, ば). Thêm dấu ゜ (maru) vào hàng は để tạo âm bán đục (ぱ, ぴ, ぷ, ぺ, ぽ)." },
+        { title: "3. Âm ghép (拗音)", desc: "Ghép các chữ thuộc cột い (trừ い) với や, ゆ, よ viết nhỏ tạo thành 1 âm tiết duy nhất: きゃ (kya), しゃ (sha), ちゃ (cha)..." },
+        { title: "4. Âm ngắt っ / ッ (促音)", desc: "Chữ つ viết nhỏ biểu thị khoảng ngắt bằng 1 phách trước phụ âm kế tiếp (k, s, t, p). Ví dụ: きって (kitte - tem), ざっし (zasshi - tạp chí)." },
+        { title: "5. Trường âm (長音)", desc: "Kéo dài nguyên âm gấp đôi độ dài bình thường. Trong Hiragana: thêm あ (hàng a), い (hàng i), う (hàng u), い/え (hàng e), う/お (hàng o). Trong Katakana dùng dấu gạch ngang 「ー」." },
+        { title: "6. Ngữ điệu (アクセント)", desc: "Tiếng Nhật có trọng âm cao - thấp (chứ không phải mạnh - yếu). Ví dụ: はし (cao-thấp: đũa) khác với はし (thấp-cao: cây cầu)." }
+      ],
+      classroom: [
+        { jp: "はじめましょう。", vi: "Chúng ta hãy bắt đầu nào." },
+        { jp: "おわりましょう。", vi: "Chúng ta hãy kết thúc ở đây." },
+        { jp: "やすみましょう。", vi: "Chúng ta hãy nghỉ giải lao." },
+        { jp: "わかりますか。", vi: "Các anh/chị có hiểu không?" },
+        { jp: "はい、わかります。", vi: "Vâng, tôi hiểu ạ." },
+        { jp: "いいえ、わかりません。", vi: "Không, tôi không hiểu ạ." },
+        { jp: "もう いちど おねがいします。", vi: "Xin hãy nói lại một lần nữa." },
+        { jp: "けっこうです。", vi: "Được rồi ạ / Đủ rồi ạ." },
+        { jp: "だめです。", vi: "Không được." },
+        { jp: "なまえ", vi: "Tên" },
+        { jp: "しけん・しゅくだい", vi: "Bài kiểm tra · Bài tập về nhà" },
+        { jp: "しつもん・こたえ・れい", vi: "Câu hỏi · Câu trả lời · Ví dụ" }
+      ],
+      greetings: [
+        { jp: "おはようございます。", vi: "Chào buổi sáng." },
+        { jp: "こんにちは。", vi: "Xin chào (ban ngày)." },
+        { jp: "こんばんは。", vi: "Chào buổi tối." },
+        { jp: "おやすみなさい。", vi: "Chúc ngủ ngon." },
+        { jp: "さようなら。", vi: "Tạm biệt." },
+        { jp: "ありがとうございます。", vi: "Xin cảm ơn." },
+        { jp: "すみません。", vi: "Xin lỗi / Cảm ơn (khi nhờ vả)." },
+        { jp: "おねがいします。", vi: "Xin nhờ anh/chị / Làm ơn." },
+        { jp: "失礼します（しつれいします）。", vi: "Xin phép (khi vào/ra phòng)." },
+        { jp: "いってきます。", vi: "Tôi đi đây (người rời nhà nói)." },
+        { jp: "いってらっしゃい。", vi: "Anh/chị đi nhé (người ở nhà đáp)." },
+        { jp: "ただいま。", vi: "Tôi đã về rồi đây." },
+        { jp: "おかえりなさい。", vi: "Anh/chị đã về đấy à." },
+        { jp: "いただきます。", vi: "Xin mời / Tôi xin phép dùng bữa (trước khi ăn)." },
+        { jp: "ごちそうさまでした。", vi: "Cảm ơn vì bữa ăn ngon (sau khi ăn)." }
+      ],
+      numbers: [
+        { num: "0", jp: "ゼロ / れい", rom: "zero / rei" },
+        { num: "1", jp: "いち", rom: "ichi" },
+        { num: "2", jp: "に", rom: "ni" },
+        { num: "3", jp: "さん", rom: "san" },
+        { num: "4", jp: "よん / し", rom: "yon / shi" },
+        { num: "5", jp: "ご", rom: "go" },
+        { num: "6", jp: "ろく", rom: "roku" },
+        { num: "7", jp: "なな / しち", rom: "nana / shichi" },
+        { num: "8", jp: "はち", rom: "hachi" },
+        { num: "9", jp: "きゅう / く", rom: "kyuu / ku" },
+        { num: "10", jp: "じゅう", rom: "juu" },
+        { num: "100", jp: "ひゃく", rom: "hyaku (300: さんびゃく, 600: ろっぴゃく, 800: はっぴゃく)" },
+        { num: "1.000", jp: "せん", rom: "sen (3.000: さんぜん, 8.000: はっせん)" },
+        { num: "10.000", jp: "いちまん", rom: "ichiman" }
+      ]
+    };
+
+    // Tiêu đề định hướng của 25 bài theo mục lục sách
+    const LESSON_TITLES = [
+      { n: 1, title: "Rất vui được làm quen với chị", topic: "Nước, người & ngôn ngữ" },
+      { n: 2, title: "Gọi là chút lòng thành thôi", topic: "Họ (cách gọi tên người Nhật)" },
+      { n: 3, title: "Chị cho tôi chai này", topic: "Cửa hàng bách hóa" },
+      { n: 4, title: "Chỗ của chị mở cửa từ lúc mấy giờ đến lúc mấy giờ ạ?", topic: "Điện thoại & thư tín" },
+      { n: 5, title: "Tàu này có đi Koshien không ạ?", topic: "Ngày nghỉ quốc gia" },
+      { n: 6, title: "Anh có đi cùng với tôi không?", topic: "Thức ăn" },
+      { n: 7, title: "Xin lỗi, tôi có thể vào được không?", topic: "Gia đình" },
+      { n: 8, title: "Đã đến lúc tôi phải về", topic: "Màu & vị" },
+      { n: 9, title: "Thật đáng tiếc", topic: "Âm nhạc, thể thao & điện ảnh" },
+      { n: 10, title: "Có tương ớt không ạ?", topic: "Trong nhà" },
+      { n: 11, title: "Cái này, cho tôi gửi bằng đường biển", topic: "Thực đơn" },
+      { n: 12, title: "Lễ hội thế nào?", topic: "Lễ hội và địa danh" },
+      { n: 13, title: "Chị tính riêng ra cho ạ", topic: "Trong khu phố" },
+      { n: 14, title: "Cho tôi đến Umeda", topic: "Ga" },
+      { n: 15, title: "Gia đình anh thế nào?", topic: "Nghề nghiệp" },
+      { n: 16, title: "Làm ơn chỉ cho tôi cách dùng", topic: "Cách sử dụng máy rút tiền tự động" },
+      { n: 17, title: "Ông bị làm sao?", topic: "Cơ thể và các loại bệnh" },
+      { n: 18, title: "Sở thích của anh là gì?", topic: "Động tác" },
+      { n: 19, title: "Tôi sẽ bắt đầu chế độ giảm cân từ ngày mai vậy", topic: "Văn hóa truyền thống & giải trí" },
+      { n: 20, title: "Nghỉ hè cậu làm gì?", topic: "Cách xưng hô" },
+      { n: 21, title: "Tôi cũng nghĩ như thế", topic: "Chức danh" },
+      { n: 22, title: "Anh muốn tìm căn hộ như thế nào?", topic: "Quần áo" },
+      { n: 23, title: "Đi như thế nào ạ?", topic: "Đường sá & giao thông" },
+      { n: 24, title: "Anh giúp tôi được không?", topic: "Tập quán tặng quà" },
+      { n: 25, title: "Các anh chị đã giúp đỡ tôi rất nhiều", topic: "Cuộc đời một con người" }
+    ];
+
+    /* ===== DỮ LIỆU CÁC BÀI: thêm bài mới bằng LESSONS.push({...}) ===== */
+    const LESSONS = [];
+
+    // BÀI 1 ĐẦY ĐỦ THEO GIÁO TRÌNH MINNA NO NIHONGO I
+    LESSONS.push({
+      n: 1,
+      title: "Rất vui được làm quen với chị",
+      topic: "Nước, người & ngôn ngữ",
+      vocab: [
+        { jp: "わたし", kanji: "私", vi: "tôi", type: "đại từ", check: false },
+        { jp: "わたしたち", kanji: "私たち", vi: "chúng tôi, chúng ta", type: "đại từ", check: false },
+        { jp: "あなた", kanji: "", vi: "anh/chị, ông/bà, bạn (ngôi thứ 2 số ít)", type: "đại từ", check: false },
+        { jp: "あのひと", kanji: "あの人", vi: "người kia, người đó", type: "danh từ", check: false },
+        { jp: "あのかた", kanji: "あの方", vi: "vị kia (cách nói lịch sự của あのひと)", type: "danh từ", check: false },
+        { jp: "みなさん", kanji: "皆さん", vi: "các anh chị, các ông bà, các bạn, quý vị", type: "danh từ", check: false },
+        { jp: "～さん", kanji: "", vi: "anh, chị, ông, bà (cách gọi người khác một cách lịch sự)", type: "hậu tố", check: false },
+        { jp: "～ちゃん", kanji: "", vi: "(hậu tố thêm vào sau tên của trẻ em thay cho ～さん)", type: "hậu tố", check: false },
+        { jp: "～くん", kanji: "～君", vi: "(hậu tố thêm vào sau tên của em trai)", type: "hậu tố", check: false },
+        { jp: "～じん", kanji: "～人", vi: "người (nước) ~ (ví dụ: アメリカじん: người Mỹ)", type: "hậu tố", check: false },
+        { jp: "せんせい", kanji: "先生", vi: "thầy/cô (không dùng khi nói về nghề nghiệp của mình)", type: "danh từ", check: false },
+        { jp: "きょうし", kanji: "教師", vi: "giáo viên", type: "danh từ", check: false },
+        { jp: "がくせい", kanji: "学生", vi: "học sinh, sinh viên", type: "danh từ", check: false },
+        { jp: "かいしゃいん", kanji: "会社員", vi: "nhân viên công ty", type: "danh từ", check: false },
+        { jp: "しゃいん", kanji: "社員", vi: "nhân viên công ty ~ (dùng kèm tên công ty, ví dụ: IMC の しゃいん)", type: "danh từ", check: false },
+        { jp: "ぎんこういん", kanji: "銀行員", vi: "nhân viên ngân hàng", type: "danh từ", check: false },
+        { jp: "いしゃ", kanji: "医者", vi: "bác sĩ", type: "danh từ", check: false },
+        { jp: "けんきゅうしゃ", kanji: "研究者", vi: "nhà nghiên cứu", type: "danh từ", check: false },
+        { jp: "エンジニア", kanji: "", vi: "kỹ sư", type: "danh từ", check: false },
+        { jp: "だいがく", kanji: "大学", vi: "trường đại học", type: "danh từ", check: false },
+        { jp: "びょういん", kanji: "病院", vi: "bệnh viện", type: "danh từ", check: false },
+        { jp: "でんき", kanji: "電気", vi: "điện, đèn điện", type: "danh từ", check: false },
+        { jp: "だれ", kanji: "誰", vi: "ai", type: "nghi vấn từ", check: false },
+        { jp: "どなた", kanji: "", vi: "vị nào (cách nói lịch sự của だれ)", type: "nghi vấn từ", check: false },
+        { jp: "―さい", kanji: "―歳", vi: "― tuổi", type: "hậu tố", check: false },
+        { jp: "なんさい", kanji: "何歳", vi: "mấy tuổi, bao nhiêu tuổi", type: "nghi vấn từ", check: false },
+        { jp: "おいくつ", kanji: "", vi: "mấy tuổi, bao nhiêu tuổi (cách nói lịch sự của なんさい)", type: "nghi vấn từ", check: false },
+        { jp: "はい", kanji: "", vi: "vâng, dạ", type: "thán từ", check: false },
+        { jp: "いいえ", kanji: "", vi: "không", type: "thán từ", check: false },
+        { jp: "しつれいですが", kanji: "失礼ですが", vi: "xin lỗi,... (khi muốn hỏi thông tin cá nhân)", type: "mẫu giao tiếp", check: false },
+        { jp: "おなまえは？", kanji: "お名前は？", vi: "Tên anh/chị là gì?", type: "mẫu giao tiếp", check: false },
+        { jp: "はじめまして。", kanji: "初めまして。", vi: "Rất hân hạnh được gặp anh/chị (lời chào lần đầu gặp)", type: "mẫu giao tiếp", check: false },
+        { jp: "どうぞ よろしく おねがいします。", kanji: "どうぞ よろしく お願いします。", vi: "Rất mong được sự giúp đỡ của anh/chị.", type: "mẫu giao tiếp", check: false },
+        { jp: "こちらは ～さんです。", kanji: "", vi: "Đây là anh/chị/ông/bà ~.", type: "mẫu giao tiếp", check: false },
+        { jp: "～から きました。", kanji: "～から 来ました。", vi: "(Tôi) đến từ ~.", type: "mẫu giao tiếp", check: false },
+        { jp: "アメリカ", kanji: "", vi: "Mỹ", type: "tên riêng", check: false },
+        { jp: "イギリス", kanji: "", vi: "Anh", type: "tên riêng", check: false },
+        { jp: "インド", kanji: "", vi: "Ấn Độ", type: "tên riêng", check: false },
+        { jp: "インドネシア", kanji: "", vi: "Indonesia", type: "tên riêng", check: false },
+        { jp: "かんこく", kanji: "韓国", vi: "Hàn Quốc", type: "tên riêng", check: false },
+        { jp: "タイ", kanji: "", vi: "Thái Lan", type: "tên riêng", check: false },
+        { jp: "ちゅうごく", kanji: "中国", vi: "Trung Quốc", type: "tên riêng", check: false },
+        { jp: "ドイツ", kanji: "", vi: "Đức", type: "tên riêng", check: false },
+        { jp: "にほん", kanji: "日本", vi: "Nhật Bản", type: "tên riêng", check: false },
+        { jp: "フランス", kanji: "", vi: "Pháp", type: "tên riêng", check: false },
+        { jp: "ブラジル", kanji: "", vi: "Brazil", type: "tên riêng", check: false },
+        { jp: "さくらだいがく", kanji: "さくら大学", vi: "Trường Đại học Sakura (tên giả định)", type: "tên riêng", check: false },
+        { jp: "ふじだいがく", kanji: "富士大学", vi: "Trường Đại học Fuji (tên giả định)", type: "tên riêng", check: false },
+        { jp: "IMC", kanji: "", vi: "Công ty IMC (tên giả định)", type: "tên riêng", check: false },
+        { jp: "パワーでんき", kanji: "パワー電気", vi: "Công ty Điện lực Power (tên giả định)", type: "tên riêng", check: false },
+        { jp: "ブラジルエアー", kanji: "", vi: "Hãng hàng không Brazil Air (tên giả định)", type: "tên riêng", check: false },
+        { jp: "AKC", kanji: "", vi: "Trung tâm giao lưu văn hóa châu Á (tên giả định)", type: "tên riêng", check: false },
+        { jp: "こうべびょういん", kanji: "神戸病院", vi: "Bệnh viện Kobe (tên giả định)", type: "tên riêng", check: false }
+      ],
+      patterns: [
+        {
+          id: "1-1",
+          formula: "N1 は N2 です",
+          vi: "N1 là N2",
+          explain: "Trợ từ 「は」 (đọc là wa) đánh dấu chủ đề của câu. 「です」 đặt ở cuối câu danh từ để biểu thị sự khẳng định và thái độ lịch sự đối với người nghe.",
+          examples: [
+            { jp: "わたしは マイク・ミラーです。", reading: "Watashi wa Maiku Mirā desu.", vi: "Tôi là Mike Miller." },
+            { jp: "わたしは かいしゃいんです。", reading: "Watashi wa kaishain desu.", vi: "Tôi là nhân viên công ty." }
+          ],
+          tips: "Trợ từ は viết là 'ha' nhưng luôn phát âm là 'wa'."
+        },
+        {
+          id: "1-2",
+          formula: "N1 は N2 じゃ ありません (ではありません)",
+          vi: "N1 không phải là N2",
+          explain: "「じゃ ありません」 là thể phủ định của 「です」, dùng trong giao tiếp hàng ngày. 「では ありません」 trang trọng hơn, thường dùng trong văn viết hoặc phát biểu.",
+          examples: [
+            { jp: "サントスさんは がくせいじゃ ありません。", reading: "Santosu-san wa gakusei ja arimasen.", vi: "Anh Santos không phải là sinh viên." }
+          ],
+          tips: "Chữ は trong では cũng đọc là 'wa'."
+        },
+        {
+          id: "1-3",
+          formula: "Câu + か",
+          vi: "Câu nghi vấn (Có phải... không? / ...là gì?)",
+          explain: "Thêm trợ từ 「か」 vào cuối câu để tạo thành câu hỏi (cuối câu lên giọng). Nếu câu hỏi có nghi vấn từ (だれ, なんさい...), trả lời trực tiếp nội dung được hỏi mà không dùng はい/いいえ.",
+          examples: [
+            { jp: "ミラーさんは かいしゃいんですか。", reading: "Mirā-san wa kaishain desu ka.", vi: "Anh Miller có phải là nhân viên công ty không?" },
+            { jp: "はい、かいしゃいんです。", reading: "Hai, kaishain desu.", vi: "Vâng, anh ấy là nhân viên công ty." },
+            { jp: "あのかたは どなたですか。", reading: "Ano kata wa donata desu ka.", vi: "Vị kia là ai vậy ạ?" }
+          ],
+          tips: "Tiếng Nhật dùng dấu chấm tròn 「。」 cuối câu hỏi thay vì dấu 「?」 trong văn bản chuẩn."
+        },
+        {
+          id: "1-4",
+          formula: "N も",
+          vi: "N cũng...",
+          explain: "Trợ từ 「も」 được dùng thay thế cho 「は」 khi thông tin về chủ đề mới giống với thông tin của chủ đề đã nêu trước đó.",
+          examples: [
+            { jp: "ミラーさんは かいしゃいんです。グプタさんも かいしゃいんです。", reading: "Mirā-san wa kaishain desu. Guputa-san mo kaishain desu.", vi: "Anh Miller là nhân viên công ty. Anh Gupta cũng là nhân viên công ty." }
+          ],
+          tips: "Không dùng kết hợp 「はも」, 「も」 thay thế hoàn toàn 「は」."
+        },
+        {
+          id: "1-5",
+          formula: "N1 の N2",
+          vi: "N2 của N1 / N2 thuộc N1",
+          explain: "Trợ từ 「の」 nối hai danh từ với nhau, trong đó N1 bổ nghĩa cho N2 (biểu thị sự sở hữu hoặc cơ quan/tổ chức mà N2 trực thuộc).",
+          examples: [
+            { jp: "ミラーさんは IMCの しゃいんです。", reading: "Mirā-san wa IMC no shain desu.", vi: "Anh Miller là nhân viên của công ty IMC." }
+          ],
+          tips: "Trật tự ngược với tiếng Việt: Cơ quan/Chủ sở hữu đứng trước 「の」, danh từ chính đứng sau."
+        },
+        {
+          id: "1-6",
+          formula: "～さん",
+          vi: "Anh/Chị/Ông/Bà ~",
+          explain: "「～さん」 gắn vào sau họ hoặc tên người nghe/người thứ ba để tỏ ý lịch sự. Tuyệt đối không gắn 「～さん」 vào sau tên của chính mình.",
+          examples: [
+            { jp: "あのかたは ミラーさんです。", reading: "Ano kata wa Mirā-san desu.", vi: "Vị kia là anh Miller." }
+          ],
+          tips: "Khi hỏi tên trực tiếp người đối diện, có thể dùng 「おなまえは？」."
+        }
+      ],
+      models: [
+        { jp: "わたしは マイク・ミラーです。", vi: "Tôi là Mike Miller." },
+        { jp: "サントスさんは がくせいじゃ ありません。", vi: "Anh Santos không phải là sinh viên." },
+        { jp: "ミラーさんは かいしゃいんですか。", vi: "Anh Miller có phải là nhân viên công ty không?" },
+        { jp: "サントスさんも かいしゃいんです。", vi: "Anh Santos cũng là nhân viên công ty." }
+      ],
+      examples: [
+        { jp: "1. あなたは マイク・ミラーさんですか。\n…はい、わたしは マイク・ミラーです。", vi: "1. Anh có phải là Mike Miller không?\n…Vâng, tôi là Mike Miller." },
+        { jp: "2. ミラーさんは がくせいですか。\n…いいえ、わたしは がくせいじゃ ありません。かいしゃいんです。", vi: "2. Anh Miller có phải là sinh viên không?\n…Không, tôi không phải là sinh viên. Tôi là nhân viên công ty." },
+        { jp: "3. ワンさんは エンジニアですか。\n…いいえ、ワンさんは エンジニアじゃ ありません。いしゃです。", vi: "3. Anh Wang có phải là kỹ sư không?\n…Không, anh Wang không phải là kỹ sư. Anh ấy là bác sĩ." },
+        { jp: "4. あのかたは どなたですか。\n…ワットさんです。さくらだいがくの せんせいです。", vi: "4. Vị kia là ai vậy ạ?\n…Là thầy Watt. Thầy là giáo viên của trường Đại học Sakura." },
+        { jp: "5. テレーザちゃんは なんさいですか。\n…9さいです。", vi: "5. Bé Teresa mấy tuổi rồi?\n…Bé 9 tuổi." }
+      ],
+      dialogue: {
+        title: "はじめまして (Rất vui được làm quen với chị)",
+        lines: [
+          { who: "Sato Keiko", jp: "おはようございます。", vi: "Chào buổi sáng." },
+          { who: "Yamada Ichiro", jp: "おはようございます。\n佐藤さん、こちらは マイク・ミラーさんです。", vi: "Chào buổi sáng.\nChị Sato, đây là anh Mike Miller." },
+          { who: "Mike Miller", jp: "はじめまして。\nマイク・ミラーです。\nアメリカから 来ました。\nどうぞ よろしく。", vi: "Rất hân hạnh được gặp chị.\nTôi là Mike Miller.\nTôi đến từ Mỹ.\nRất mong được sự giúp đỡ của chị." },
+          { who: "Sato Keiko", jp: "佐藤けい子です。\nどうぞ よろしく。", vi: "Tôi là Sato Keiko.\nRất mong được sự giúp đỡ của anh." }
+        ]
+      },
+      reference: {
+        title: "Nước, người & ngôn ngữ",
+        text: "Quy tắc ghép tên quốc gia trong tiếng Nhật:\n• Tên nước + じん (人) = Người nước đó (Ví dụ: にほんじん: người Nhật, ベトナムじん: người Việt Nam, アメリカじん: người Mỹ).\n• Tên nước + ご (語) = Ngôn ngữ nước đó (Ví dụ: にほんご: tiếng Nhật, ベトナムご: tiếng Việt, えいご: tiếng Anh).\n• Một số quốc gia tiêu biểu bổ sung: イタリア (Ý), オーストラリア (Úc), カナダ (Canada), スペイン (Tây Ban Nha), フィリピン (Philippines), ベトナム (Việt Nam), マレーシア (Malaysia), メキシコ (Mexico), ロシア (Nga)."
+      }
+    });
+
+    /* ==========================================================================
+       MODULE 2: TRẠNG THÁI, LƯU TRỮ & SRS LEITNER 5 HỘP
+       ========================================================================== */
+    const STORAGE_KEY = "minna_fuji_progress_v1";
+
+    const DEFAULT_STATE = {
+      theme: window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
+      snowMode: "medium", // "off" | "light" | "medium" | "heavy"
+      showFurigana: true,
+      showRomaji: true,
+      showTranslation: true,
+      shadowingMode: false,
+      currentView: "lesson", // "prep" | "kana" | "lesson" | "reference" | "progress" | "search"
+      currentLesson: 1,
+      currentLessonTab: "vocab", // "vocab" | "dialogue" | "grammar" | "practice" | "ref" | "exam"
+      vocabViewMode: "list", // "list" | "flashcard"
+      vocabTypeFilter: "all",
+      flashcardIdx: 0,
+      flashcardFlipped: false,
+      // Tiến độ học tập
+      masteredVocab: {}, // key: "1-わたし" -> true
+      leitnerBoxes: {},  // key: "1-わたし" -> 1..5
+      completedLessons: [], // [1, 2, ...]
+      quizStats: { total: 0, correct: 0, streak: 0 },
+      studyDays: [new Date().toISOString().slice(0, 10)]
+    };
+
+    let state = { ...DEFAULT_STATE };
+    let storageAvailable = true;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          state = { ...DEFAULT_STATE, ...parsed };
+        }
+        // Cập nhật chuỗi ngày học
+        const today = new Date().toISOString().slice(0, 10);
+        if (!state.studyDays.includes(today)) {
+          state.studyDays.push(today);
+        }
+      } catch (e) {
+        storageAvailable = false;
+        console.warn("Không thể truy cập localStorage, dùng bộ nhớ tạm:", e);
+      }
+    }
+
+    function saveState() {
+      if (!storageAvailable) return;
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        storageAvailable = false;
+      }
+    }
+
+    // Hệ thống SRS Leitner 5 hộp
+    function updateLeitner(vocabKey, isCorrect) {
+      const currentBox = state.leitnerBoxes[vocabKey] || 1;
+      if (isCorrect) {
+        const nextBox = Math.min(5, currentBox + 1);
+        state.leitnerBoxes[vocabKey] = nextBox;
+        if (nextBox >= 4) state.masteredVocab[vocabKey] = true;
+      } else {
+        state.leitnerBoxes[vocabKey] = 1; // Sai trả về hộp 1 để ưu tiên ôn
+        delete state.masteredVocab[vocabKey];
+      }
+      saveState();
+    }
+
+    function getVocabKey(lessonNum, jp) {
+      return `${lessonNum}-${jp}`;
+    }
+
+    /* ==========================================================================
+       MODULE 3: ÂM THANH WEB SPEECH API (ja-JP)
+       ========================================================================== */
+    let jaVoices = [];
+    let ttsChecked = false;
+
+    function initVoices() {
+      if (!("speechSynthesis" in window)) return;
+      const update = () => {
+        const all = window.speechSynthesis.getVoices();
+        jaVoices = all.filter(v => v.lang && v.lang.toLowerCase().includes("ja"));
+        if (all.length > 0 && jaVoices.length === 0 && !ttsChecked) {
+          ttsChecked = true;
+          document.getElementById("tts-warning").style.display = "flex";
+        }
+      };
+      update();
+      window.speechSynthesis.onvoiceschanged = update;
+    }
+
+    function speakJapanese(text, speakerName = "") {
+      if (!("speechSynthesis" in window)) {
+        document.getElementById("tts-warning").style.display = "flex";
+        return;
+      }
+      window.speechSynthesis.cancel();
+      // Làm sạch ký tự chú thích trước khi đọc
+      const cleanText = text.replace(/（.*?）/g, "").replace(/\(.*?\)/g, "").replace(/～/g, "");
+      const utter = new SpeechSynthesisUtterance(cleanText);
+      utter.lang = "ja-JP";
+      utter.rate = 0.85;
+
+      if (jaVoices.length > 0) {
+        // Phân biệt giọng theo nhân vật nếu có nhiều giọng hoặc chỉnh pitch nhẹ
+        const hash = speakerName.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+        utter.voice = jaVoices[hash % jaVoices.length];
+        if (speakerName) {
+          const isFemale = /Sato|Maria|Karina|Tomoko|Izumi|Teresa/i.test(speakerName);
+          utter.pitch = isFemale ? 1.15 : 0.92;
+        }
+      } else {
+        document.getElementById("tts-warning").style.display = "flex";
+      }
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakDialogueSequence(lines) {
+      if (!("speechSynthesis" in window)) return;
+      window.speechSynthesis.cancel();
+      let idx = 0;
+      function nextLine() {
+        if (idx >= lines.length) return;
+        const line = lines[idx++];
+        const cleanText = line.jp.replace(/（.*?）/g, "").replace(/\(.*?\)/g, "");
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        utter.lang = "ja-JP";
+        utter.rate = 0.85;
+        if (jaVoices.length > 0) {
+          const hash = line.who.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
+          utter.voice = jaVoices[hash % jaVoices.length];
+          utter.pitch = /Sato|Maria|Karina|Tomoko|Izumi|Teresa/i.test(line.who) ? 1.15 : 0.92;
+        }
+        utter.onend = () => setTimeout(nextLine, 350);
+        window.speechSynthesis.speak(utter);
+      }
+      nextLine();
+    }
+
+    /* ==========================================================================
+       MODULE 4: CHUYỂN ĐỔI ROMAJI CƠ BẢN (HIỂN THỊ KHI BẬT ROMAJI)
+       ========================================================================== */
+    const KANA_ROMAJI_MAP = {
+      "あ":"a","い":"i","う":"u","え":"e","お":"o","か":"ka","き":"ki","く":"ku","け":"ke","こ":"ko",
+      "さ":"sa","し":"shi","す":"su","せ":"se","そ":"so","た":"ta","ち":"chi","つ":"tsu","て":"te","と":"to",
+      "な":"na","に":"ni","ぬ":"nu","ね":"ne","の":"no","は":"ha","ひ":"hi","ふ":"fu","へ":"he","ほ":"ho",
+      "ま":"ma","み":"mi","む":"mu","め":"me","も":"mo","や":"ya","ゆ":"yu","よ":"yo",
+      "ら":"ra","り":"ri","る":"ru","れ":"re","ろ":"ro","わ":"wa","を":"o","ん":"n",
+      "が":"ga","ぎ":"gi","ぐ":"gu","げ":"ge","ご":"go","ざ":"za","じ":"ji","ず":"zu","ぜ":"ze","ぞ":"zo",
+      "だ":"da","ぢ":"ji","づ":"zu","で":"de","ど":"do","ば":"ba","び":"bi","ぶ":"bu","べ":"be","ぼ":"bo",
+      "ぱ":"pa","ぴ":"pi","ぷ":"pu","ぺ":"pe","ぽ":"po",
+      "きゃ":"kya","きゅ":"kyu","きょ":"kyo","しゃ":"sha","しゅ":"shu","しょ":"sho",
+      "ちゃ":"cha","ちゅ":"chu","ちょ":"cho","にゃ":"nya","にゅ":"nyu","にょ":"nyo",
+      "ひゃ":"hya","ひゅ":"hyu","ひょ":"hyo","みゃ":"mya","みゅ":"myu","みょ":"myo",
+      "りゃ":"rya","りゅ":"ryu","りょ":"ryo","ぎゃ":"gya","ぎゅ":"gyu","ぎょ":"gyo",
+      "じゃ":"ja","じゅ":"ju","じょ":"jo","びゃ":"bya","びゅ":"byu","びょ":"byo",
+      "ぴゃ":"pya","ぴゅ":"pyu","ぴょ":"pyo",
+      "ア":"a","イ":"i","ウ":"u","エ":"e","オ":"o","カ":"ka","キ":"ki","ク":"ku","ケ":"ke","コ":"ko",
+      "サ":"sa","シ":"shi","ス":"su","セ":"se","ソ":"so","タ":"ta","チ":"chi","ツ":"tsu","テ":"te","ト":"to",
+      "ナ":"na","ニ":"ni","ヌ":"nu","ネ":"ne","ノ":"no","ハ":"ha","ヒ":"hi","フ":"fu","ヘ":"he","ホ":"ho",
+      "マ":"ma","ミ":"mi","ム":"mu","メ":"me","モ":"mo","ヤ":"ya","ユ":"yu","ヨ":"yo",
+      "ラ":"ra","リ":"ri","ル":"ru","レ":"re","ロ":"ro","ワ":"wa","ヲ":"o","ン":"n",
+      "ガ":"ga","ギ":"gi","グ":"gu","ゲ":"ge","ゴ":"go","ザ":"za","ジ":"ji","ズ":"zu","ゼ":"ze","ゾ":"zo",
+      "ダ":"da","ヂ":"ji","ヅ":"zu","デ":"de","ド":"do","バ":"ba","ビ":"bi","ブ":"bu","ベ":"be","ボ":"bo",
+      "パ":"pa","ピ":"pi","プ":"pu","ペ":"pe","ポ":"po","ー":"-"
+    };
+
+    function toRomaji(kanaStr) {
+      let res = "";
+      for (let i = 0; i < kanaStr.length; i++) {
+        const two = kanaStr.slice(i, i + 2);
+        if (KANA_ROMAJI_MAP[two]) {
+          res += KANA_ROMAJI_MAP[two];
+          i++;
+        } else if (kanaStr[i] === "っ" || kanaStr[i] === "ッ") {
+          const next = KANA_ROMAJI_MAP[kanaStr[i + 1]] || "";
+          if (next) res += next[0];
+        } else {
+          res += KANA_ROMAJI_MAP[kanaStr[i]] || kanaStr[i];
+        }
+      }
+      return res;
+    }
+
+    function renderJpWithFurigana(jp, kanji) {
+      if (!kanji) return `<span class="jp-text">${jp}</span>`;
+      return `<ruby class="jp-text">${kanji}<rt>${jp}</rt></ruby>`;
+    }
+
+    /* ==========================================================================
+       MODULE 5: ENGINE TỰ SINH BÀI TẬP & KIỂM TRA (GIỚI HẠN KIẾN THỨC ≤ BÀI N)
+       ========================================================================== */
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Lấy toàn bộ dữ liệu từ Bài 1 đến Bài maxLesson
+    function getPoolUpToLesson(maxLesson) {
+      const available = LESSONS.filter(l => l.n <= maxLesson);
+      const vocabPool = [];
+      const patternPool = [];
+      const examplePool = [];
+
+      available.forEach(lesson => {
+        lesson.vocab.forEach(v => {
+          vocabPool.push({ ...v, lessonN: lesson.n, key: getVocabKey(lesson.n, v.jp) });
+        });
+        lesson.patterns.forEach(p => {
+          patternPool.push({ ...p, lessonN: lesson.n });
+          p.examples.forEach(ex => {
+            examplePool.push({ ...ex, patternId: p.id, formula: p.formula, lessonN: lesson.n });
+          });
+        });
+      });
+
+      // Ưu tiên từ vựng ở hộp Leitner thấp (sai nhiều / chưa thuộc)
+      vocabPool.sort((a, b) => (state.leitnerBoxes[a.key] || 1) - (state.leitnerBoxes[b.key] || 1));
+
+      return { vocabPool, patternPool, examplePool };
+    }
+
+    function generatePracticeQuestions(maxLesson, count = 8, focusPatternId = null) {
+      const { vocabPool, patternPool, examplePool } = getPoolUpToLesson(maxLesson);
+      const questions = [];
+
+      if (vocabPool.length < 4) return questions;
+
+      for (let i = 0; i < count; i++) {
+        const qType = focusPatternId ? (i % 2 === 0 ? "particle" : "reorder") : ["jp2vi", "vi2jp", "audio", "particle", "reorder", "translate"][i % 6];
+
+        if (qType === "jp2vi" || qType === "vi2jp" || qType === "audio") {
+          const target = vocabPool[i % Math.min(vocabPool.length, 15)];
+          const distractors = shuffleArray(vocabPool.filter(v => v.jp !== target.jp)).slice(0, 3);
+          const choices = shuffleArray([target, ...distractors]);
+
+          if (qType === "jp2vi") {
+            questions.push({
+              type: "choice",
+              prompt: `Nghĩa của từ 「${target.kanji || target.jp}」 (${target.jp}) là gì?`,
+              audioText: target.jp,
+              options: choices.map(c => c.vi),
+              answer: target.vi,
+              vocabKey: target.key,
+              explain: `Bài ${target.lessonN} — Từ vựng: ${target.kanji || target.jp} (${target.jp}) = ${target.vi}.`
+            });
+          } else if (qType === "vi2jp") {
+            questions.push({
+              type: "choice",
+              prompt: `Từ tiếng Nhật nào có nghĩa là: "${target.vi}"?`,
+              options: choices.map(c => c.kanji ? `${c.kanji} (${c.jp})` : c.jp),
+              answer: target.kanji ? `${target.kanji} (${target.jp})` : target.jp,
+              vocabKey: target.key,
+              explain: `Bài ${target.lessonN} — Từ vựng: "${target.vi}" là ${target.kanji || target.jp}.`
+            });
+          } else {
+            questions.push({
+              type: "choice",
+              prompt: `🔊 Nghe phát âm và chọn từ đúng:`,
+              audioText: target.jp,
+              autoPlay: true,
+              options: choices.map(c => `${c.jp} — ${c.vi}`),
+              answer: `${target.jp} — ${target.vi}`,
+              vocabKey: target.key,
+              explain: `Bài ${target.lessonN} — Âm thanh đọc là 「${target.jp}」 (${target.vi}).`
+            });
+          }
+        } else if (qType === "particle") {
+          // Tìm câu ví dụ có trợ từ cơ bản (は, も, の, か, を, に, へ, で, が)
+          const filteredEx = focusPatternId ? examplePool.filter(e => e.patternId === focusPatternId) : examplePool;
+          const pool = filteredEx.length > 0 ? filteredEx : examplePool;
+          const ex = pool[i % pool.length];
+          const particles = ["は", "も", "の", "か", "を", "に", "へ", "で", "が"];
+          let foundP = null;
+          let blankSentence = ex.jp;
+
+          for (const p of particles) {
+            const regex = new RegExp(`(?<=[^\\s])${p}(?=\\s|。|、|$)`);
+            if (regex.test(ex.jp)) {
+              foundP = p;
+              blankSentence = ex.jp.replace(regex, " [ ___ ] ");
+              break;
+            }
+          }
+
+          if (foundP) {
+            const opts = shuffleArray([foundP, ...shuffleArray(particles.filter(x => x !== foundP)).slice(0, 3)]);
+            questions.push({
+              type: "choice",
+              prompt: `Điền trợ từ thích hợp vào chỗ trống:\n「${blankSentence}」\n(${ex.vi})`,
+              options: opts,
+              answer: foundP,
+              explain: `Bài ${ex.lessonN}, điểm ngữ pháp ${ex.patternId} (${ex.formula}): Câu đầy đủ là 「${ex.jp}」.`
+            });
+          } else {
+            i--; // Thử dạng khác
+            continue;
+          }
+        } else if (qType === "reorder") {
+          const filteredEx = focusPatternId ? examplePool.filter(e => e.patternId === focusPatternId) : examplePool;
+          const pool = filteredEx.length > 0 ? filteredEx : examplePool;
+          const ex = pool[i % pool.length];
+          const clean = ex.jp.replace(/。/g, "").trim();
+          const tokens = clean.split(/\s+/);
+          if (tokens.length >= 2) {
+            questions.push({
+              type: "reorder",
+              prompt: `Sắp xếp các từ sau thành câu tiếng Nhật đúng nghĩa:\n"${ex.vi}"`,
+              tokens: shuffleArray(tokens),
+              answerTokens: tokens,
+              answerText: clean,
+              explain: `Bài ${ex.lessonN}, điểm ngữ pháp ${ex.patternId} (${ex.formula}): 「${ex.jp}」.`
+            });
+          } else {
+            i--;
+          }
+        } else {
+          // Dịch Việt -> Nhật chọn đáp án
+          const ex = examplePool[i % examplePool.length];
+          const distractors = shuffleArray(examplePool.filter(e => e.jp !== ex.jp)).slice(0, 3);
+          const choices = shuffleArray([ex, ...distractors]);
+          questions.push({
+            type: "choice",
+            prompt: `Chọn câu tiếng Nhật dịch đúng ý sau:\n"${ex.vi}"`,
+            options: choices.map(c => c.jp),
+            answer: ex.jp,
+            explain: `Bài ${ex.lessonN}, điểm ngữ pháp ${ex.patternId} (${ex.formula}).`
+          });
+        }
+      }
+      return questions;
+    }
+
+    /* ==========================================================================
+       MODULE 6: GIAO DIỆN & RENDER CÁC MÀN HÌNH
+       ========================================================================== */
+    const mainEl = document.getElementById("main-content");
+
+    function renderNavigation() {
+      const desktopList = document.getElementById("desktop-lesson-list");
+      const mobileList = document.getElementById("mobile-lesson-list");
+
+      const html = LESSON_TITLES.map(item => {
+        const loaded = LESSONS.find(l => l.n === item.n);
+        const isDone = state.completedLessons.includes(item.n);
+        const isActive = state.currentView === "lesson" && state.currentLesson === item.n;
+        return `
+          <button class="lesson-item-btn ${isActive ? "active" : ""}"
+                  ${!loaded ? "disabled title='Đang chờ nạp dữ liệu ở giai đoạn tiếp theo'" : ""}
+                  onclick="selectLesson(${item.n})">
+            <span class="lesson-num-badge">${isDone ? "✓" : item.n}</span>
+            <span style="flex:1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              Bài ${item.n}: ${item.title}
+            </span>
+          </button>
+        `;
+      }).join("");
+
+      desktopList.innerHTML = html;
+      mobileList.innerHTML = html;
+
+      // Highlight nav buttons
+      document.querySelectorAll("[data-view]").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-view") === state.currentView);
+      });
+    }
+
+    function switchView(viewName) {
+      state.currentView = viewName;
+      saveState();
+      renderNavigation();
+      renderMain();
+    }
+
+    function selectLesson(n) {
+      state.currentView = "lesson";
+      state.currentLesson = n;
+      state.flashcardIdx = 0;
+      state.flashcardFlipped = false;
+      document.getElementById("mobile-lesson-modal").classList.remove("open");
+      saveState();
+      renderNavigation();
+      renderMain();
+    }
+
+    function renderMain() {
+      // Trigger hiệu ứng chuyển cảnh mượt
+      mainEl.style.animation = "none";
+      mainEl.offsetHeight;
+      mainEl.style.animation = "fadeSlideIn 0.22s ease-out";
+
+      switch (state.currentView) {
+        case "prep":
+          renderPrepView();
+          break;
+        case "kana":
+          renderKanaView();
+          break;
+        case "reference":
+          renderReferenceView();
+          break;
+        case "progress":
+          renderProgressView();
+          break;
+        case "search":
+          renderSearchView();
+          break;
+        case "lesson":
+        default:
+          renderLessonView();
+          break;
+      }
+    }
+
+    /* --- MÀN HÌNH 1: BÀI CHUẨN BỊ --- */
+    function renderPrepView() {
+      mainEl.innerHTML = `
+        <div style="margin-bottom: 18px;">
+          <span class="tag-pill">Phần mở đầu giáo trình</span>
+          <h2 class="serif-title" style="font-size: 1.5rem; margin-top: 6px;">Bài Chuẩn Bị (Kiến thức nền tảng)</h2>
+          <p style="color: var(--text-secondary); font-size: 0.92rem;">Làm quen với hệ thống ngữ âm, câu nói trong lớp học, chào hỏi hằng ngày và chữ số tiếng Nhật.</p>
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 18px 0 10px;">1. Phát âm tiếng Nhật</h3>
+        <div class="vocab-grid">
+          ${PREP_LESSON.pronunciation.map(p => `
+            <div class="vocab-card">
+              <strong style="color: var(--torii-red);">${p.title}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">${p.desc}</p>
+            </div>
+          `).join("")}
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 22px 0 10px;">2. Những cách nói thường dùng trong lớp học</h3>
+        <div class="vocab-grid">
+          ${PREP_LESSON.classroom.map(c => `
+            <div class="vocab-card" style="flex-direction: row; align-items: center;">
+              <div>
+                <div class="jp-text" style="font-weight: 700; font-size: 1.05rem;">${c.jp}</div>
+                <div style="font-size: 0.88rem; color: var(--text-secondary);">${c.vi}</div>
+              </div>
+              <button class="icon-btn" onclick="speakJapanese('${c.jp.replace(/'/g, "\\'")}')" aria-label="Nghe phát âm ${c.jp}">🔊</button>
+            </div>
+          `).join("")}
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 22px 0 10px;">3. Chào hỏi và những cách nói hằng ngày</h3>
+        <div class="vocab-grid">
+          ${PREP_LESSON.greetings.map(g => `
+            <div class="vocab-card" style="flex-direction: row; align-items: center;">
+              <div>
+                <div class="jp-text" style="font-weight: 700; font-size: 1.05rem;">${g.jp}</div>
+                <div style="font-size: 0.88rem; color: var(--text-secondary);">${g.vi}</div>
+              </div>
+              <button class="icon-btn" onclick="speakJapanese('${g.jp.replace(/'/g, "\\'")}')" aria-label="Nghe phát âm ${g.jp}">🔊</button>
+            </div>
+          `).join("")}
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 22px 0 10px;">4. Chữ số (数字)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Số</th><th>Tiếng Nhật</th><th>Cách đọc / Lưu ý</th><th>Nghe</th></tr>
+            </thead>
+            <tbody>
+              ${PREP_LESSON.numbers.map(n => `
+                <tr>
+                  <td><strong>${n.num}</strong></td>
+                  <td class="jp-text" style="font-weight: 700;">${n.jp}</td>
+                  <td>${n.rom}</td>
+                  <td><button class="icon-btn" onclick="speakJapanese('${n.jp.split('/')[0].trim()}')" aria-label="Nghe số ${n.num}">🔊</button></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    /* --- MÀN HÌNH 2: BẢNG CHỮ CÁI KANA & QUIZ --- */
+    let kanaTab = "hiragana"; // "hiragana" | "katakana" | "quiz"
+    let kanaQuizMode = "both"; // "hiragana" | "katakana" | "both"
+    let kanaQuizCurrent = null;
+
+    function renderKanaView() {
+      mainEl.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 16px;">
+          <div>
+            <h2 class="serif-title" style="font-size: 1.45rem;">Bảng Chữ Cái Tiếng Nhật</h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">Bấm vào từng chữ cái để nghe phát âm chuẩn.</p>
+          </div>
+          <div class="sub-tabs" style="margin-bottom: 0; border: none;">
+            <button class="sub-tab ${kanaTab === "hiragana" ? "active" : ""}" onclick="kanaTab='hiragana'; renderKanaView()">Hiragana (ひらがな)</button>
+            <button class="sub-tab ${kanaTab === "katakana" ? "active" : ""}" onclick="kanaTab='katakana'; renderKanaView()">Katakana (カタカナ)</button>
+            <button class="sub-tab ${kanaTab === "quiz" ? "active" : ""}" onclick="kanaTab='quiz'; startKanaQuiz()">🎯 Luyện tập Kana</button>
+          </div>
+        </div>
+        <div id="kana-stage"></div>
+      `;
+
+      const stage = document.getElementById("kana-stage");
+      if (kanaTab === "quiz") {
+        renderKanaQuizUI(stage);
+        return;
+      }
+
+      const idx = kanaTab === "hiragana" ? 0 : 1;
+      stage.innerHTML = `
+        <h3 style="font-size: 1rem; margin: 12px 0 8px; color: var(--indigo-primary);">Thanh âm cơ bản (46 chữ)</h3>
+        <div class="kana-grid">
+          ${KANA_DATA.basic.map(item => {
+            const char = item[idx];
+            if (!char) return `<div class="kana-cell empty"></div>`;
+            return `
+              <button class="kana-cell" onclick="speakJapanese('${char}')" aria-label="Chữ ${char}, đọc là ${item[2]}">
+                <span class="kana-char jp-text">${char}</span>
+                <span class="kana-rom">${item[2]}</span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+
+        <h3 style="font-size: 1rem; margin: 22px 0 8px; color: var(--indigo-primary);">Âm đục & Âm bán đục</h3>
+        <div class="kana-grid">
+          ${KANA_DATA.dakuten.map(item => `
+            <button class="kana-cell" onclick="speakJapanese('${item[idx]}')" aria-label="Chữ ${item[idx]}, đọc là ${item[2]}">
+              <span class="kana-char jp-text">${item[idx]}</span>
+              <span class="kana-rom">${item[2]}</span>
+            </button>
+          `).join("")}
+        </div>
+
+        <h3 style="font-size: 1rem; margin: 22px 0 8px; color: var(--indigo-primary);">Âm ghép (Yōon)</h3>
+        <div class="kana-grid" style="grid-template-columns: repeat(3, 1fr);">
+          ${KANA_DATA.yoon.map(item => `
+            <button class="kana-cell" style="aspect-ratio: 1.5/1;" onclick="speakJapanese('${item[idx]}')" aria-label="Chữ ${item[idx]}, đọc là ${item[2]}">
+              <span class="kana-char jp-text">${item[idx]}</span>
+              <span class="kana-rom">${item[2]}</span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function startKanaQuiz() {
+      const pool = [...KANA_DATA.basic, ...KANA_DATA.dakuten].filter(x => x[0]);
+      const target = pool[Math.floor(Math.random() * pool.length)];
+      const useKata = kanaQuizMode === "katakana" || (kanaQuizMode === "both" && Math.random() > 0.5);
+      const char = useKata ? target[1] : target[0];
+      const distractors = shuffleArray(pool.filter(x => x[2] !== target[2])).slice(0, 3);
+      const options = shuffleArray([target[2], ...distractors.map(d => d[2])]);
+
+      kanaQuizCurrent = { char, answer: target[2], options, answered: false };
+      renderKanaView();
+    }
+
+    function renderKanaQuizUI(container) {
+      if (!kanaQuizCurrent) {
+        startKanaQuiz();
+        return;
+      }
+      container.innerHTML = `
+        <div style="max-width: 480px; margin: 0 auto; text-align: center;">
+          <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 16px;">
+            <button class="btn-secondary" style="${kanaQuizMode === "hiragana" ? "background:var(--indigo-primary);color:#fff;" : ""}" onclick="kanaQuizMode='hiragana'; startKanaQuiz()">Hiragana</button>
+            <button class="btn-secondary" style="${kanaQuizMode === "katakana" ? "background:var(--indigo-primary);color:#fff;" : ""}" onclick="kanaQuizMode='katakana'; startKanaQuiz()">Katakana</button>
+            <button class="btn-secondary" style="${kanaQuizMode === "both" ? "background:var(--indigo-primary);color:#fff;" : ""}" onclick="kanaQuizMode='both'; startKanaQuiz()">Cả hai</button>
+          </div>
+
+          <div class="vocab-card" style="padding: 28px; margin-bottom: 16px;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Chữ này đọc là gì?</span>
+            <div class="jp-text" style="font-size: 4rem; font-weight: 700; margin: 8px 0;">${kanaQuizCurrent.char}</div>
+            <div><button class="icon-btn" onclick="speakJapanese('${kanaQuizCurrent.char}')">🔊 Nghe âm thanh</button></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            ${kanaQuizCurrent.options.map(opt => `
+              <button class="quiz-option" style="justify-content: center; font-weight: 700;" onclick="checkKanaAnswer(this, '${opt}')">${opt}</button>
+            `).join("")}
+          </div>
+          <div id="kana-feedback" style="margin-top: 14px; text-align: left;"></div>
+        </div>
+      `;
+    }
+
+    function checkKanaAnswer(btn, chosen) {
+      if (kanaQuizCurrent.answered) return;
+      kanaQuizCurrent.answered = true;
+      speakJapanese(kanaQuizCurrent.char);
+
+      const isRight = chosen === kanaQuizCurrent.answer;
+      recordQuizResult(isRight);
+
+      document.querySelectorAll("#kana-stage .quiz-option").forEach(b => {
+        b.disabled = true;
+        if (b.textContent === kanaQuizCurrent.answer) b.classList.add("correct");
+        else if (b === btn && !isRight) b.classList.add("wrong");
+      });
+
+      const tip = KANA_DATA.confusableTips[kanaQuizCurrent.char] || "";
+      document.getElementById("kana-feedback").innerHTML = `
+        <div style="padding: 12px; border-radius: 12px; background: ${isRight ? "var(--success-bg)" : "var(--error-bg)"};">
+          <strong>${isRight ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án là "${kanaQuizCurrent.answer}".`}</strong>
+          ${!isRight && tip ? `<p style="font-size: 0.88rem; margin-top: 4px;">💡 Mẹo nhớ: ${tip}</p>` : ""}
+          <div style="margin-top: 10px;">
+            <button class="btn-primary" onclick="startKanaQuiz()">Câu tiếp theo →</button>
+          </div>
+        </div>
+      `;
+    }
+
+    /* --- MÀN HÌNH 3: CHI TIẾT BÀI HỌC (6 TAB) --- */
+    function renderLessonView() {
+      const lesson = LESSONS.find(l => l.n === state.currentLesson);
+      if (!lesson) {
+        mainEl.innerHTML = `<p>Bài học này đang được cập nhật.</p>`;
+        return;
+      }
+
+      const isCompleted = state.completedLessons.includes(lesson.n);
+
+      mainEl.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+          <div>
+            <span class="tag-pill">Bài ${lesson.n} · ${lesson.topic}</span>
+            <h2 class="serif-title" style="font-size: 1.45rem; margin-top: 4px;">${lesson.title}</h2>
+          </div>
+          <button class="btn-secondary" onclick="toggleLessonComplete(${lesson.n})" style="${isCompleted ? "background: var(--success-bg); color: var(--success-color);" : ""}">
+            ${isCompleted ? "✓ Đã hoàn thành Bài " + lesson.n : "Đánh dấu hoàn thành"}
+          </button>
+        </div>
+
+        <!-- 6 Sub-tabs theo yêu cầu -->
+        <div class="sub-tabs" role="tablist">
+          <button class="sub-tab ${state.currentLessonTab === "vocab" ? "active" : ""}" onclick="setLessonTab('vocab')">1. Từ vựng (${lesson.vocab.length})</button>
+          <button class="sub-tab ${state.currentLessonTab === "dialogue" ? "active" : ""}" onclick="setLessonTab('dialogue')">2. Mẫu câu & Hội thoại</button>
+          <button class="sub-tab ${state.currentLessonTab === "grammar" ? "active" : ""}" onclick="setLessonTab('grammar')">3. Ngữ pháp (${lesson.patterns.length})</button>
+          <button class="sub-tab ${state.currentLessonTab === "practice" ? "active" : ""}" onclick="setLessonTab('practice')">4. Luyện tập</button>
+          <button class="sub-tab ${state.currentLessonTab === "ref" ? "active" : ""}" onclick="setLessonTab('ref')">5. Thông tin tham khảo</button>
+          <button class="sub-tab ${state.currentLessonTab === "exam" ? "active" : ""}" onclick="setLessonTab('exam')">6. Kiểm tra & Ôn tập</button>
+        </div>
+
+        <div id="lesson-tab-body"></div>
+      `;
+
+      const body = document.getElementById("lesson-tab-body");
+      switch (state.currentLessonTab) {
+        case "vocab": renderLessonVocab(body, lesson); break;
+        case "dialogue": renderLessonDialogue(body, lesson); break;
+        case "grammar": renderLessonGrammar(body, lesson); break;
+        case "practice": renderLessonPractice(body, lesson); break;
+        case "ref": renderLessonRef(body, lesson); break;
+        case "exam": renderLessonExam(body, lesson); break;
+      }
+    }
+
+    function setLessonTab(tab) {
+      state.currentLessonTab = tab;
+      saveState();
+      renderLessonView();
+    }
+
+    function toggleLessonComplete(n) {
+      if (state.completedLessons.includes(n)) {
+        state.completedLessons = state.completedLessons.filter(x => x !== n);
+      } else {
+        state.completedLessons.push(n);
+      }
+      saveState();
+      renderNavigation();
+      renderLessonView();
+    }
+
+    /* Tab 1: Từ vựng */
+    function renderLessonVocab(container, lesson) {
+      const types = ["all", ...new Set(lesson.vocab.map(v => v.type))];
+      const filtered = state.vocabTypeFilter === "all"
+        ? lesson.vocab
+        : lesson.vocab.filter(v => v.type === state.vocabTypeFilter);
+
+      container.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <button class="btn-secondary" onclick="state.vocabViewMode = state.vocabViewMode === 'list' ? 'flashcard' : 'list'; renderLessonView()">
+              ${state.vocabViewMode === "list" ? "🃏 Chế độ Flashcard" : "📋 Chế độ Danh sách"}
+            </button>
+            <button class="btn-secondary" onclick="state.showFurigana = !state.showFurigana; applyDisplayToggles(); renderLessonView()">
+              ${state.showFurigana ? "👁️ Ẩn Furigana" : "👁️ Hiện Furigana"}
+            </button>
+            <button class="btn-secondary" onclick="state.showRomaji = !state.showRomaji; renderLessonView()">
+              ${state.showRomaji ? "Aa Ẩn Romaji" : "Aa Hiện Romaji"}
+            </button>
+          </div>
+
+          <select aria-label="Lọc theo từ loại" onchange="state.vocabTypeFilter = this.value; renderLessonView()" style="padding: 8px 12px; border-radius: 10px; background: var(--card-bg-elevated); border: 1px solid var(--card-border);">
+            ${types.map(t => `<option value="${t}" ${state.vocabTypeFilter === t ? "selected" : ""}>${t === "all" ? "Tất cả từ loại" : t}</option>`).join("")}
+          </select>
+        </div>
+
+        <div id="vocab-stage"></div>
+      `;
+
+      const stage = document.getElementById("vocab-stage");
+
+      if (state.vocabViewMode === "flashcard") {
+        const idx = Math.min(state.flashcardIdx, filtered.length - 1);
+        const item = filtered[idx];
+        const vKey = getVocabKey(lesson.n, item.jp);
+        const isMastered = !!state.masteredVocab[vKey];
+
+        stage.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">Thẻ ${idx + 1} / ${filtered.length} (Bấm vào thẻ để lật)</div>
+          <div class="flashcard-stage">
+            <div class="flashcard-inner ${state.flashcardFlipped ? "flipped" : ""}" onclick="state.flashcardFlipped = !state.flashcardFlipped; this.classList.toggle('flipped')">
+              <div class="flashcard-face">
+                <span class="tag-pill" style="margin-bottom: 12px;">${item.type}</span>
+                <div class="vocab-jp" style="font-size: 2rem;">${renderJpWithFurigana(item.jp, item.kanji)}</div>
+                ${state.showRomaji ? `<div class="vocab-romaji" style="margin-top: 6px;">${toRomaji(item.jp)}</div>` : ""}
+                <button class="icon-btn" style="margin-top: 14px;" onclick="event.stopPropagation(); speakJapanese('${item.jp.replace(/'/g, "\\'")}')" aria-label="Nghe phát âm">🔊 Nghe</button>
+              </div>
+              <div class="flashcard-face flashcard-back">
+                <div style="font-size: 1.35rem; font-weight: 700; margin-bottom: 8px;">${item.vi}</div>
+                <div class="jp-text" style="color: var(--text-secondary);">${item.kanji || item.jp} (${item.jp})</div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-secondary" onclick="state.flashcardIdx = (state.flashcardIdx - 1 + ${filtered.length}) % ${filtered.length}; state.flashcardFlipped = false; renderLessonView()">← Trước</button>
+            <button class="btn-secondary" style="${isMastered ? "background:var(--success-bg);color:var(--success-color);" : ""}" onclick="toggleMasteredVocab('${vKey}')">
+              ${isMastered ? "✓ Đã thuộc" : "Đánh dấu đã thuộc"}
+            </button>
+            <button class="btn-primary" onclick="state.flashcardIdx = (state.flashcardIdx + 1) % ${filtered.length}; state.flashcardFlipped = false; renderLessonView()">Tiếp →</button>
+          </div>
+        `;
+        return;
+      }
+
+      stage.innerHTML = `
+        <div class="vocab-grid">
+          ${filtered.map(v => {
+            const vKey = getVocabKey(lesson.n, v.jp);
+            const isMastered = !!state.masteredVocab[vKey];
+            const box = state.leitnerBoxes[vKey] || 1;
+            return `
+              <div class="vocab-card ${isMastered ? "mastered" : ""}">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 6px;">
+                    <span class="tag-pill">${v.type} · Hộp ${box}</span>
+                    <button class="icon-btn" style="padding: 4px 8px; min-height: 30px;" onclick="speakJapanese('${v.jp.replace(/'/g, "\\'")}')" aria-label="Nghe ${v.jp}">🔊</button>
+                  </div>
+                  <div class="vocab-jp" style="margin-top: 6px;">${renderJpWithFurigana(v.jp, v.kanji)}</div>
+                  ${state.showRomaji ? `<div class="vocab-romaji">${toRomaji(v.jp)}</div>` : ""}
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; margin-top: 6px;">
+                  <div class="vocab-vi">${v.vi}</div>
+                  <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.78rem; white-space: nowrap;" onclick="toggleMasteredVocab('${vKey}')">
+                    ${isMastered ? "✓ Thuộc" : "Học"}
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function toggleMasteredVocab(vKey) {
+      if (state.masteredVocab[vKey]) {
+        delete state.masteredVocab[vKey];
+        state.leitnerBoxes[vKey] = 1;
+      } else {
+        state.masteredVocab[vKey] = true;
+        state.leitnerBoxes[vKey] = 5;
+      }
+      saveState();
+      renderLessonView();
+    }
+
+    /* Tab 2: Mẫu câu & Hội thoại */
+    function renderLessonDialogue(container, lesson) {
+      container.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-primary" onclick='speakDialogueSequence(${JSON.stringify(lesson.dialogue.lines).replace(/'/g, "&apos;")})'>
+            ▶️ Nghe cả đoạn hội thoại
+          </button>
+          <button class="btn-secondary" onclick="state.showTranslation = !state.showTranslation; renderLessonView()">
+            ${state.showTranslation ? "🇻🇳 Ẩn dịch tiếng Việt" : "🇻🇳 Hiện dịch tiếng Việt"}
+          </button>
+          <button class="btn-secondary" onclick="state.shadowingMode = !state.shadowingMode; renderLessonView()">
+            ${state.shadowingMode ? "🗣️ Tắt che chữ (Shadowing)" : "🗣️ Bật chế độ Shadowing"}
+          </button>
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin-bottom: 10px;">I. Mẫu câu (文型)</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
+          ${lesson.models.map(m => `
+            <div class="vocab-card" style="flex-direction: row; align-items: center;">
+              <div class="${state.shadowingMode ? "shadowing-blur" : ""}">
+                <div class="jp-text jp-line" style="font-weight: 700; font-size: 1.05rem;">${m.jp}</div>
+                ${state.showTranslation ? `<div style="font-size: 0.9rem; color: var(--text-secondary);">${m.vi}</div>` : ""}
+              </div>
+              <button class="icon-btn" onclick="speakJapanese('${m.jp.replace(/'/g, "\\'")}')" aria-label="Nghe mẫu câu">🔊</button>
+            </div>
+          `).join("")}
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin-bottom: 10px;">II. Ví dụ (例文)</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px;">
+          ${lesson.examples.map(ex => `
+            <div class="vocab-card" style="flex-direction: row; align-items: center;">
+              <div class="${state.shadowingMode ? "shadowing-blur" : ""}" style="white-space: pre-line;">
+                <div class="jp-text jp-line" style="font-weight: 600;">${ex.jp}</div>
+                ${state.showTranslation ? `<div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">${ex.vi}</div>` : ""}
+              </div>
+              <button class="icon-btn" onclick="speakJapanese('${ex.jp.replace(/\n/g, " ").replace(/'/g, "\\'")}')" aria-label="Nghe ví dụ">🔊</button>
+            </div>
+          `).join("")}
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin-bottom: 12px;">III. Hội thoại: ${lesson.dialogue.title}</h3>
+        <div class="chat-list ${state.shadowingMode ? "shadowing-blur" : ""}">
+          ${lesson.dialogue.lines.map(line => {
+            const charInfo = CHARACTERS[line.who] || { abbr: line.who.slice(0, 2).toUpperCase(), color: "#264373" };
+            return `
+              <div class="chat-row">
+                <div class="avatar-circle" style="background: ${charInfo.color};" title="${line.who}">${charInfo.abbr}</div>
+                <div class="chat-bubble">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <strong style="font-size: 0.85rem; color: var(--indigo-primary);">${line.who}</strong>
+                    <button class="icon-btn" style="padding: 3px 8px; min-height: 28px;" onclick="speakJapanese('${line.jp.replace(/\n/g, " ").replace(/'/g, "\\'")}', '${line.who}')" aria-label="Nghe lời thoại của ${line.who}">🔊</button>
+                  </div>
+                  <div class="jp-text jp-line" style="font-size: 1.05rem; font-weight: 600; white-space: pre-line;">${line.jp}</div>
+                  ${state.showTranslation ? `<div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 6px; white-space: pre-line;">${line.vi}</div>` : ""}
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    /* Tab 3: Ngữ pháp */
+    function renderLessonGrammar(container, lesson) {
+      container.innerHTML = lesson.patterns.map((p, idx) => `
+        <div class="grammar-card">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div>
+              <span class="tag-pill">Điểm ${idx + 1}</span>
+              <div class="grammar-formula jp-text" style="margin-top: 4px;">${p.formula}</div>
+              <div style="font-weight: 600; color: var(--text-primary);">${p.vi}</div>
+            </div>
+            <button class="btn-primary" onclick="practiceSpecificPattern('${p.id}')">🎯 Luyện điểm này</button>
+          </div>
+
+          <p style="font-size: 0.94rem; color: var(--text-secondary); margin-bottom: 12px;">${p.explain}</p>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            ${p.examples.map(ex => `
+              <div style="padding: 10px 12px; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                <div>
+                  <div class="jp-text" style="font-weight: 600;">${ex.jp}</div>
+                  <div style="font-size: 0.86rem; color: var(--text-secondary);">${ex.vi}</div>
+                </div>
+                <button class="icon-btn" onclick="speakJapanese('${ex.jp.replace(/'/g, "\\'")}')" aria-label="Nghe ví dụ">🔊</button>
+              </div>
+            `).join("")}
+          </div>
+
+          ${p.tips ? `<div style="margin-top: 10px; font-size: 0.85rem; color: var(--indigo-primary);">💡 <strong>Lưu ý:</strong> ${p.tips}</div>` : ""}
+        </div>
+      `).join("");
+    }
+
+    /* Tab 4 & 6: Engine Luyện tập & Kiểm tra */
+    let activeQuiz = {
+      questions: [],
+      index: 0,
+      score: 0,
+      selectedTokens: [],
+      answered: false,
+      title: ""
+    };
+
+    function practiceSpecificPattern(patternId) {
+      state.currentLessonTab = "practice";
+      activeQuiz = {
+        questions: generatePracticeQuestions(state.currentLesson, 6, patternId),
+        index: 0,
+        score: 0,
+        selectedTokens: [],
+        answered: false,
+        title: `Luyện điểm ngữ pháp ${patternId}`
+      };
+      renderLessonView();
+    }
+
+    function renderLessonPractice(container, lesson) {
+      if (activeQuiz.questions.length === 0) {
+        activeQuiz = {
+          questions: generatePracticeQuestions(lesson.n, 8),
+          index: 0,
+          score: 0,
+          selectedTokens: [],
+          answered: false,
+          title: `Luyện tập tổng hợp Bài ${lesson.n}`
+        };
+      }
+      renderQuizRunner(container, lesson.n, false);
+    }
+
+    function renderLessonExam(container, lesson) {
+      container.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
+          <button class="btn-primary" onclick="startExam(${lesson.n}, 12, 'Kiểm tra cuối Bài ${lesson.n}')">📝 Kiểm tra cuối Bài ${lesson.n} (12 câu)</button>
+          <button class="btn-secondary" onclick="startExam(${lesson.n}, 15, 'Ôn tập tích lũy Bài 1 → ${lesson.n}')">🏔️ Ôn tập tích lũy Bài 1 → ${lesson.n} (15 câu)</button>
+        </div>
+        <div id="exam-stage"></div>
+      `;
+      if (activeQuiz.questions.length > 0) {
+        renderQuizRunner(document.getElementById("exam-stage"), lesson.n, true);
+      }
+    }
+
+    function startExam(maxLesson, count, title) {
+      activeQuiz = {
+        questions: generatePracticeQuestions(maxLesson, count),
+        index: 0,
+        score: 0,
+        selectedTokens: [],
+        answered: false,
+        title
+      };
+      renderLessonView();
+    }
+
+    function renderQuizRunner(container, lessonN, isExam) {
+      if (activeQuiz.index >= activeQuiz.questions.length) {
+        const pct = Math.round((activeQuiz.score / activeQuiz.questions.length) * 100);
+        if (isExam && pct >= 80 && !state.completedLessons.includes(lessonN)) {
+          state.completedLessons.push(lessonN);
+          saveState();
+          renderNavigation();
+        }
+        container.innerHTML = `
+          <div class="vocab-card" style="text-align: center; padding: 28px; max-width: 500px; margin: 0 auto;">
+            <div style="font-size: 2.5rem; margin-bottom: 8px;">${pct >= 80 ? "🎉" : "💪"}</div>
+            <h3 class="serif-title" style="font-size: 1.3rem;">Hoàn thành: ${activeQuiz.title}</h3>
+            <p style="font-size: 1.1rem; margin: 10px 0;">Điểm số: <strong>${activeQuiz.score} / ${activeQuiz.questions.length}</strong> (${pct}%)</p>
+            ${isExam && pct >= 80 ? `<p style="color: var(--success-color); font-weight: 600;">✓ Đã tự động đánh dấu hoàn thành Bài ${lessonN}!</p>` : ""}
+            <div style="margin-top: 16px;">
+              <button class="btn-primary" onclick="activeQuiz.questions=[]; renderLessonView()">Làm lượt mới</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const q = activeQuiz.questions[activeQuiz.index];
+      if (q.autoPlay && !activeQuiz.answered) {
+        setTimeout(() => speakJapanese(q.audioText), 200);
+        q.autoPlay = false;
+      }
+
+      container.innerHTML = `
+        <div style="max-width: 620px; margin: 0 auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.88rem; color: var(--text-secondary);">
+            <span><strong>${activeQuiz.title}</strong></span>
+            <span>Câu ${activeQuiz.index + 1} / ${activeQuiz.questions.length} · Chuỗi đúng: 🔥 ${state.quizStats.streak}</span>
+          </div>
+
+          <div class="vocab-card" style="padding: 20px; margin-bottom: 14px;">
+            <div style="white-space: pre-line; font-size: 1.05rem; font-weight: 600; margin-bottom: 10px;">${q.prompt}</div>
+            ${q.audioText ? `<div><button class="icon-btn" onclick="speakJapanese('${q.audioText.replace(/'/g, "\\'")}')">🔊 Nghe lại</button></div>` : ""}
+          </div>
+
+          <div id="quiz-interaction-area"></div>
+          <div id="quiz-feedback-area" style="margin-top: 12px;"></div>
+        </div>
+      `;
+
+      const area = document.getElementById("quiz-interaction-area");
+
+      if (q.type === "choice") {
+        area.innerHTML = q.options.map(opt => `
+          <button class="quiz-option jp-text" onclick='submitChoiceAnswer(this, ${JSON.stringify(opt).replace(/'/g, "&apos;")})'>
+            <span>${opt}</span>
+          </button>
+        `).join("");
+      } else if (q.type === "reorder") {
+        area.innerHTML = `
+          <div class="word-bank" id="selected-words-bank">
+            ${activeQuiz.selectedTokens.map((t, idx) => `
+              <button class="word-chip jp-text" onclick="removeReorderToken(${idx})">${t}</button>
+            `).join("")}
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+            ${q.tokens.map((t, idx) => {
+              const usedCount = activeQuiz.selectedTokens.filter(x => x === t).length;
+              const totalCount = q.tokens.filter(x => x === t).length;
+              const disabled = usedCount >= totalCount;
+              return `<button class="btn-secondary jp-text" ${disabled ? "disabled style='opacity:0.4;'" : ""} onclick='addReorderToken(${JSON.stringify(t).replace(/'/g, "&apos;")})'>${t}</button>`;
+            }).join("")}
+          </div>
+          <button class="btn-primary" ${activeQuiz.selectedTokens.length === 0 ? "disabled" : ""} onclick="submitReorderAnswer()">Kiểm tra câu</button>
+        `;
+      }
+    }
+
+    function addReorderToken(token) {
+      if (activeQuiz.answered) return;
+      activeQuiz.selectedTokens.push(token);
+      renderLessonView();
+    }
+
+    function removeReorderToken(idx) {
+      if (activeQuiz.answered) return;
+      activeQuiz.selectedTokens.splice(idx, 1);
+      renderLessonView();
+    }
+
+    function submitReorderAnswer() {
+      if (activeQuiz.answered) return;
+      const q = activeQuiz.questions[activeQuiz.index];
+      const userSentence = activeQuiz.selectedTokens.join(" ");
+      const isRight = userSentence === q.answerText;
+      finalizeQuestion(isRight, q);
+    }
+
+    function submitChoiceAnswer(btn, chosen) {
+      if (activeQuiz.answered) return;
+      const q = activeQuiz.questions[activeQuiz.index];
+      const isRight = chosen === q.answer;
+
+      document.querySelectorAll("#quiz-interaction-area .quiz-option").forEach(b => {
+        b.disabled = true;
+        const txt = b.innerText.trim();
+        if (txt === q.answer) b.classList.add("correct");
+        else if (b === btn && !isRight) b.classList.add("wrong");
+      });
+
+      finalizeQuestion(isRight, q);
+    }
+
+    function finalizeQuestion(isRight, q) {
+      activeQuiz.answered = true;
+      if (isRight) activeQuiz.score++;
+      if (q.vocabKey) updateLeitner(q.vocabKey, isRight);
+      recordQuizResult(isRight);
+
+      document.getElementById("quiz-feedback-area").innerHTML = `
+        <div style="padding: 14px; border-radius: 14px; background: ${isRight ? "var(--success-bg)" : "var(--error-bg)"}; border: 1px solid ${isRight ? "var(--success-color)" : "var(--error-color)"};">
+          <strong>${isRight ? "✓ Chính xác!" : `✗ Chưa đúng. Đáp án đúng là: ${q.answer || q.answerText}`}</strong>
+          <p style="font-size: 0.9rem; margin-top: 6px;">${q.explain}</p>
+          <div style="margin-top: 12px;">
+            <button class="btn-primary" onclick="activeQuiz.index++; activeQuiz.answered=false; activeQuiz.selectedTokens=[]; renderLessonView()">Câu tiếp theo →</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function recordQuizResult(isRight) {
+      state.quizStats.total++;
+      if (isRight) {
+        state.quizStats.correct++;
+        state.quizStats.streak++;
+        // Trả lời đúng liên tiếp 5 câu -> tuyết rơi dày trong 4 giây
+        if (state.quizStats.streak > 0 && state.quizStats.streak % 5 === 0) {
+          triggerSnowBurst();
+        }
+      } else {
+        state.quizStats.streak = 0;
+      }
+      saveState();
+    }
+
+    /* Tab 5: Thông tin tham khảo */
+    function renderLessonRef(container, lesson) {
+      container.innerHTML = `
+        <div class="grammar-card">
+          <span class="tag-pill">Từ và thông tin tham khảo</span>
+          <h3 class="serif-title" style="font-size: 1.2rem; margin: 8px 0 12px;">${lesson.reference.title}</h3>
+          <div style="white-space: pre-line; line-height: 1.75; color: var(--text-secondary);">
+            ${lesson.reference.text}
+          </div>
+        </div>
+      `;
+    }
+
+    /* --- MÀN HÌNH 4: TRA CỨU --- */
+    function renderReferenceView() {
+      mainEl.innerHTML = `
+        <h2 class="serif-title" style="font-size: 1.45rem; margin-bottom: 6px;">Sổ Tay Tra Cứu Tổng Hợp</h2>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Bảng trợ từ, chia thể động từ, số đếm và thời gian (sẽ tự động mở rộng khi nạp thêm các bài sau).</p>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 16px 0 8px;">1. Bảng Trợ Từ Cơ Bản (Cập nhật đến Bài ${LESSONS.length})</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Trợ từ</th><th>Chức năng chính</th><th>Ví dụ</th><th>Xuất hiện</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="jp-text"><strong>は</strong> (wa)</td><td>Đánh dấu chủ đề của câu</td><td class="jp-text">わたしは ミラーです。</td><td>Bài 1</td></tr>
+              <tr><td class="jp-text"><strong>か</strong></td><td>Đặt cuối câu tạo câu nghi vấn</td><td class="jp-text">がくせいですか。</td><td>Bài 1</td></tr>
+              <tr><td class="jp-text"><strong>も</strong></td><td>Cũng... (thay thế cho は)</td><td class="jp-text">サントスさんも かいしゃいんです。</td><td>Bài 1</td></tr>
+              <tr><td class="jp-text"><strong>の</strong></td><td>Nối hai danh từ (sở hữu / trực thuộc)</td><td class="jp-text">IMCの しゃいんです。</td><td>Bài 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="serif-title" style="font-size: 1.15rem; margin: 22px 0 8px;">2. Cách đọc Tuổi (～歳 / ～さい)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Tuổi</th><th>Cách đọc</th><th>Tuổi</th><th>Cách đọc</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 tuổi</td><td class="jp-text">いっさい</td><td>6 tuổi</td><td class="jp-text">ろくさい</td></tr>
+              <tr><td>2 tuổi</td><td class="jp-text">にさい</td><td>7 tuổi</td><td class="jp-text">ななさい</td></tr>
+              <tr><td>3 tuổi</td><td class="jp-text">さんさい</td><td>8 tuổi</td><td class="jp-text">はっさい</td></tr>
+              <tr><td>4 tuổi</td><td class="jp-text">よんさい</td><td>9 tuổi</td><td class="jp-text">きゅうさい</td></tr>
+              <tr><td>5 tuổi</td><td class="jp-text">ごさい</td><td>10 / 20 tuổi</td><td class="jp-text">じゅっさい / はたち (đặc biệt)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    /* --- MÀN HÌNH 5: TIẾN ĐỘ LEO NÚI PHÚ SĨ --- */
+    function renderProgressView() {
+      const totalLessons = 25;
+      const doneCount = state.completedLessons.length;
+      const pct = Math.round((doneCount / totalLessons) * 100);
+      const masteredCount = Object.keys(state.masteredVocab).length;
+      const accuracy = state.quizStats.total > 0 ? Math.round((state.quizStats.correct / state.quizStats.total) * 100) : 0;
+
+      // Tính tọa độ người leo núi trên sườn núi SVG (từ chân núi x=60, y=220 lên đỉnh x=250, y=40)
+      const ratio = doneCount / totalLessons;
+      const climberX = 60 + ratio * 190;
+      const climberY = 220 - ratio * 180;
+
+      mainEl.innerHTML = `
+        <h2 class="serif-title" style="font-size: 1.45rem; margin-bottom: 6px;">Hành Trình Chinh Phục Đỉnh Phú Sĩ</h2>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Mỗi bài học hoàn thành là một trạm dừng chân đưa bạn tiến gần hơn tới đỉnh núi 3.776m.</p>
+
+        <!-- Sơ đồ leo núi trực quan -->
+        <div class="vocab-card" style="padding: 20px; margin-bottom: 18px; text-align: center;">
+          <svg viewBox="0 0 500 250" style="width: 100%; max-width: 520px; height: auto; margin: 0 auto;">
+            <!-- Dáng núi sơ đồ -->
+            <path d="M 40 230 Q 170 160 235 40 L 265 40 Q 330 160 460 230 Z" style="fill: var(--fuji-light); opacity: 0.3;" />
+            <!-- Đường mòn leo núi -->
+            <line x1="60" y1="220" x2="250" y2="40" stroke="var(--card-border)" stroke-width="4" stroke-dasharray="6 4" />
+            <line x1="60" y1="220" x2="${climberX}" y2="${climberY}" stroke="var(--torii-red)" stroke-width="4" />
+            <!-- Cờ trên đỉnh -->
+            <text x="245" y="34" font-size="22">${doneCount === 25 ? "🚩" : "🏔️"}</text>
+            <!-- Nhân vật đang leo -->
+            <circle cx="${climberX}" cy="${climberY}" r="9" fill="var(--torii-red)" />
+            <text x="${climberX}" y="${climberY - 14}" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Trạm ${doneCount}/25</text>
+          </svg>
+          ${doneCount === 25 ? `<div style="color: var(--torii-red); font-weight: 700; font-size: 1.15rem; margin-top: 8px;">🎊 Chúc mừng! Bạn đã chinh phục trọn vẹn 25 bài Minna no Nihongo I!</div>` : ""}
+        </div>
+
+        <!-- 4 Thẻ thống kê -->
+        <div class="vocab-grid" style="margin-bottom: 20px;">
+          <div class="vocab-card">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Tiến độ giáo trình</span>
+            <strong style="font-size: 1.6rem; color: var(--indigo-primary);">${doneCount} / 25 bài (${pct}%)</strong>
+          </div>
+          <div class="vocab-card">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Từ vựng đã thuộc</span>
+            <strong style="font-size: 1.6rem; color: var(--success-color);">${masteredCount} từ</strong>
+          </div>
+          <div class="vocab-card">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Độ chính xác luyện tập</span>
+            <strong style="font-size: 1.6rem; color: var(--torii-red);">${accuracy}%</strong>
+          </div>
+          <div class="vocab-card">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Số ngày đã học</span>
+            <strong style="font-size: 1.6rem;">${state.studyDays.length} ngày</strong>
+          </div>
+        </div>
+
+        <!-- Xuất / Nhập JSON -->
+        <div class="vocab-card">
+          <h3 style="font-size: 1rem; margin-bottom: 6px;">Sao lưu & Khôi phục dữ liệu học tập</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">
+            ${storageAvailable ? "Tiến độ đang được tự động lưu trên trình duyệt này." : "⚠️ Trình duyệt đang chặn lưu trữ cục bộ; hãy xuất file JSON để giữ tiến độ."}
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <button class="btn-primary" onclick="exportProgressJSON()">⬇️ Xuất tiến độ (JSON)</button>
+            <label class="btn-secondary" style="cursor: pointer;">
+              ⬆️ Nhập tiến độ (JSON)
+              <input type="file" accept=".json" style="display: none;" onchange="importProgressJSON(event)" />
+            </label>
+          </div>
+        </div>
+      `;
+    }
+
+    function exportProgressJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const a = document.createElement("a");
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `minna-fuji-progress-${new Date().toISOString().slice(0, 10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function importProgressJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          state = { ...DEFAULT_STATE, ...imported };
+          saveState();
+          applyTheme();
+          renderNavigation();
+          renderMain();
+        } catch (err) {
+          console.error("Lỗi đọc file JSON:", err);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    /* --- MÀN HÌNH 6: TÌM KIẾM TOÀN CỤC --- */
+    let searchQuery = "";
+
+    function renderSearchView() {
+      const q = searchQuery.trim().toLowerCase();
+      if (!q) {
+        switchView("lesson");
+        return;
+      }
+
+      const vocabMatches = [];
+      const patternMatches = [];
+
+      LESSONS.forEach(lesson => {
+        lesson.vocab.forEach(v => {
+          if (v.jp.toLowerCase().includes(q) || (v.kanji && v.kanji.toLowerCase().includes(q)) || v.vi.toLowerCase().includes(q)) {
+            vocabMatches.push({ ...v, lessonN: lesson.n });
+          }
+        });
+        lesson.patterns.forEach(p => {
+          if (p.formula.toLowerCase().includes(q) || p.vi.toLowerCase().includes(q) || p.explain.toLowerCase().includes(q)) {
+            patternMatches.push({ ...p, lessonN: lesson.n });
+          }
+        });
+      });
+
+      mainEl.innerHTML = `
+        <h2 class="serif-title" style="font-size: 1.35rem; margin-bottom: 14px;">Kết quả tìm kiếm cho "${searchQuery}"</h2>
+        <h3 style="font-size: 1rem; margin-bottom: 8px; color: var(--indigo-primary);">Từ vựng (${vocabMatches.length})</h3>
+        <div class="vocab-grid" style="margin-bottom: 20px;">
+          ${vocabMatches.length ? vocabMatches.map(v => `
+            <div class="vocab-card">
+              <div style="display: flex; justify-content: space-between;">
+                <span class="tag-pill">Bài ${v.lessonN} · ${v.type}</span>
+                <button class="icon-btn" style="padding: 2px 8px; min-height: 28px;" onclick="speakJapanese('${v.jp.replace(/'/g, "\\'")}')">🔊</button>
+              </div>
+              <div class="vocab-jp">${renderJpWithFurigana(v.jp, v.kanji)}</div>
+              <div class="vocab-vi">${v.vi}</div>
+            </div>
+          `).join("") : `<p style="color: var(--text-muted);">Không tìm thấy từ vựng phù hợp.</p>`}
+        </div>
+
+        <h3 style="font-size: 1rem; margin-bottom: 8px; color: var(--indigo-primary);">Ngữ pháp (${patternMatches.length})</h3>
+        ${patternMatches.length ? patternMatches.map(p => `
+          <div class="grammar-card">
+            <span class="tag-pill">Bài ${p.lessonN}</span>
+            <div class="grammar-formula jp-text">${p.formula}</div>
+            <div><strong>${p.vi}</strong> — ${p.explain}</div>
+          </div>
+        `).join("") : `<p style="color: var(--text-muted);">Không tìm thấy điểm ngữ pháp phù hợp.</p>`}
+      `;
+    }
+
+    /* ==========================================================================
+       MODULE 7: NỀN NÚI PARALLAX, SAO ĐÊM & TUYẾT RƠI CANVAS 3 LỚP
+       ========================================================================== */
+    function initStarsAndParallax() {
+      const starsLayer = document.getElementById("stars-layer");
+      for (let i = 0; i < 80; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        const size = (Math.random() * 2 + 1).toFixed(1);
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 65}%`;
+        star.style.setProperty("--dur", `${(Math.random() * 3 + 2.5).toFixed(1)}s`);
+        starsLayer.appendChild(star);
+      }
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      const layers = document.querySelectorAll(".parallax-layer");
+      window.addEventListener("mousemove", e => {
+        const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+        const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+        layers.forEach(layer => {
+          const depth = parseFloat(layer.dataset.depth || 0.02);
+          layer.style.transform = `translate3d(${-nx * depth * 450}px, ${-ny * depth * 220}px, 0)`;
+        });
+      }, { passive: true });
+    }
+
+    // Hệ thống tuyết rơi Canvas
+    const snowCanvas = document.getElementById("snow-canvas");
+    const snowCtx = snowCanvas.getContext("2d");
+    let flakes = [];
+    let snowBurstMultiplier = 1;
+    let lastFrameTime = performance.now();
+    let lowFpsFrames = 0;
+
+    function triggerSnowBurst() {
+      if (state.snowMode === "off") return;
+      snowBurstMultiplier = 2.2;
+      initSnowflakes();
+      setTimeout(() => {
+        snowBurstMultiplier = 1;
+        initSnowflakes();
+      }, 4500);
+    }
+
+    function getTargetFlakeCount() {
+      if (state.snowMode === "off") return 0;
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return 18;
+
+      const isMobile = window.innerWidth < 768;
+      const base = isMobile ? 70 : 140;
+      const modeMult = state.snowMode === "light" ? 0.5 : state.snowMode === "heavy" ? 1.6 : 1;
+      return Math.round(base * modeMult * snowBurstMultiplier);
+    }
+
+    function resizeSnowCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      snowCanvas.width = window.innerWidth * dpr;
+      snowCanvas.height = window.innerHeight * dpr;
+      snowCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function initSnowflakes() {
+      const count = getTargetFlakeCount();
+      flakes = [];
+      for (let i = 0; i < count; i++) {
+        // 3 lớp độ sâu: 0 = xa, 1 = giữa, 2 = gần
+        const layer = i % 3;
+        flakes.push({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: layer === 0 ? 1.3 + Math.random() : layer === 1 ? 2.4 + Math.random() * 1.2 : 3.8 + Math.random() * 1.6,
+          vy: (layer === 0 ? 0.35 : layer === 1 ? 0.75 : 1.3) + Math.random() * 0.4,
+          amp: (layer + 1) * 0.45 + Math.random() * 0.5,
+          phase: Math.random() * Math.PI * 2,
+          alpha: layer === 0 ? 0.35 : layer === 1 ? 0.65 : 0.85,
+          layer
+        });
+      }
+    }
+
+    function animateSnow(now) {
+      requestAnimationFrame(animateSnow);
+      if (document.hidden || state.snowMode === "off") {
+        snowCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        return;
+      }
+
+      // Giám sát FPS, tự giảm mật độ nếu < 40 FPS
+      const dt = now - lastFrameTime;
+      lastFrameTime = now;
+      if (dt > 26 && flakes.length > 35) {
+        lowFpsFrames++;
+        if (lowFpsFrames > 25) {
+          flakes.splice(0, Math.floor(flakes.length * 0.25));
+          lowFpsFrames = 0;
+        }
+      } else {
+        lowFpsFrames = 0;
+      }
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const wind = prefersReduced ? 0 : Math.sin(now * 0.00025) * 0.65;
+
+      snowCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      for (let i = 0; i < flakes.length; i++) {
+        const f = flakes[i];
+        if (!prefersReduced) {
+          f.phase += 0.015;
+          f.y += f.vy * (snowBurstMultiplier > 1 ? 1.5 : 1);
+          f.x += Math.sin(f.phase) * f.amp + wind * (f.layer + 1) * 0.35;
+        }
+
+        if (f.y > h + 10) { f.y = -10; f.x = Math.random() * w; }
+        if (f.x > w + 10) f.x = -10;
+        if (f.x < -10) f.x = w + 10;
+
+        snowCtx.beginPath();
+        snowCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        snowCtx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
+        snowCtx.fill();
+      }
+    }
+
+    /* ==========================================================================
+       MODULE 8: KHỞI TẠO SỰ KIỆN & ĐIỀU KHIỂN CHUNG
+       ========================================================================== */
+    function applyTheme() {
+      document.documentElement.setAttribute("data-theme", state.theme);
+      document.getElementById("theme-icon").textContent = state.theme === "dark" ? "🌙" : "🌅";
+    }
+
+    function applyDisplayToggles() {
+      document.body.classList.toggle("hide-furigana", !state.showFurigana);
+      const labels = { off: "Tắt", light: "Nhẹ", medium: "Vừa", heavy: "Dày" };
+      document.getElementById("snow-mode-label").textContent = labels[state.snowMode] || "Vừa";
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      applyTheme();
+      applyDisplayToggles();
+      initVoices();
+      initStarsAndParallax();
+      resizeSnowCanvas();
+      initSnowflakes();
+      requestAnimationFrame(animateSnow);
+
+      renderNavigation();
+      renderMain();
+
+      // Sự kiện đổi theme
+      document.getElementById("theme-toggle-btn").addEventListener("click", () => {
+        state.theme = state.theme === "light" ? "dark" : "light";
+        applyTheme();
+        saveState();
+      });
+
+      // Sự kiện đổi mật độ tuyết
+      document.getElementById("snow-toggle-btn").addEventListener("click", () => {
+        const order = ["light", "medium", "heavy", "off"];
+        state.snowMode = order[(order.indexOf(state.snowMode) + 1) % order.length];
+        applyDisplayToggles();
+        initSnowflakes();
+        saveState();
+      });
+
+      // Điều hướng view
+      document.querySelectorAll("[data-view]").forEach(btn => {
+        btn.addEventListener("click", () => switchView(btn.getAttribute("data-view")));
+      });
+
+      // Modal chọn bài trên Mobile
+      document.getElementById("mob-lessons-btn").addEventListener("click", () => {
+        document.getElementById("mobile-lesson-modal").classList.add("open");
+      });
+      document.getElementById("close-lesson-modal").addEventListener("click", () => {
+        document.getElementById("mobile-lesson-modal").classList.remove("open");
+      });
+
+      // Tìm kiếm toàn cục
+      document.getElementById("global-search-input").addEventListener("input", e => {
+        searchQuery = e.target.value;
+        if (searchQuery.trim()) {
+          state.currentView = "search";
+          renderNavigation();
+          renderSearchView();
+        } else {
+          switchView("lesson");
+        }
+      });
+
+      window.addEventListener("resize", () => {
+        resizeSnowCanvas();
+        initSnowflakes();
+      });
+    });
+  </script>
+</body>
+</html>
