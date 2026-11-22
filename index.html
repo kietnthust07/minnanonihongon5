@@ -97,6 +97,7 @@
       html, body {
         width: 100%;
         min-height: 100vh;
+        min-height: 100dvh;
         font-family: var(--font-sans);
         color: var(--text-primary);
         background-color: var(--sky-top);
@@ -224,6 +225,7 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        min-height: 100dvh;
         max-width: 1360px;
         margin: 0 auto;
         padding: 12px 16px 84px; /* Chừa đáy cho bottom nav trên mobile */
@@ -355,14 +357,14 @@
       /* Lưới nội dung chính: Sidebar (Desktop) + Main Content */
       .workspace {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 18px;
         flex: 1;
       }
 
       @media (min-width: 900px) {
         .workspace {
-          grid-template-columns: 270px 1fr;
+          grid-template-columns: 270px minmax(0, 1fr);
           align-items: start;
         }
       }
@@ -655,6 +657,7 @@
 
       .flashcard-inner {
         position: relative;
+        display: grid;
         width: 100%;
         min-height: 240px;
         transition: transform 0.5s;
@@ -667,8 +670,8 @@
       }
 
       .flashcard-face {
-        position: absolute;
-        inset: 0;
+        position: relative;
+        grid-area: 1 / 1;
         backface-visibility: hidden;
         background: var(--card-bg-elevated);
         border: 2px solid var(--card-border);
@@ -956,10 +959,217 @@
         width: 100%;
         max-width: 500px;
         max-height: 82vh;
+        max-height: 82dvh;
         overflow-y: auto;
         padding: 20px;
       }
-    </style>
+  
+    /* ==========================================================================
+       6. TỐI ƯU HÓA GIAO DIỆN ĐIỆN THOẠI (MOBILE RESPONSIVE < 640px)
+       ========================================================================== */
+    .sub-tabs {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sub-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Safe area cho iPhone có tai thỏ / thanh home */
+    .mobile-bottom-nav {
+      padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Nút touch target tối thiểu 40px trên màn hình cảm ứng */
+    @media (pointer: coarse) {
+      .icon-btn, .btn-secondary, .btn-primary, .sub-tab {
+        min-height: 40px;
+      }
+      .kana-check-btn {
+        width: 26px;
+        height: 26px;
+        top: 4px;
+        right: 4px;
+      }
+    }
+
+    @media (max-width: 639px) {
+      #app-wrapper {
+        padding: 8px 10px calc(76px + env(safe-area-inset-bottom, 0px));
+      }
+
+      /* Header xếp gọn: Dòng 1 Brand + Controls, Dòng 2 Search full-width */
+      .top-bar {
+        padding: 10px 12px;
+        gap: 10px;
+        margin-bottom: 12px;
+        border-radius: 16px;
+      }
+      .brand {
+        order: 1;
+        gap: 8px;
+      }
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+      }
+      .brand-text h1 {
+        font-size: 0.96rem;
+      }
+      .brand-text span {
+        font-size: 0.72rem;
+        display: block;
+      }
+      .header-controls {
+        order: 2;
+        gap: 6px;
+      }
+      .header-controls .icon-btn {
+        padding: 6px 10px;
+        min-height: 36px;
+        font-size: 0.8rem;
+      }
+      .search-box {
+        order: 3;
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      .search-box input {
+        padding: 8px 12px 8px 34px;
+        font-size: 16px; /* Tránh tự động zoom trên iOS Safari */
+      }
+
+      /* Khung nội dung chính gọn gàng */
+      .main-stage {
+        padding: 14px 12px;
+        border-radius: 16px;
+        min-height: calc(100vh - 190px);
+        min-height: calc(100dvh - 190px);
+      }
+
+      .main-stage h2.serif-title {
+        font-size: 1.22rem !important;
+        line-height: 1.35;
+      }
+
+      /* Thanh sub-tab cuộn ngang mượt */
+      .sub-tabs {
+        gap: 6px;
+        margin-bottom: 14px;
+        padding-bottom: 6px;
+      }
+      .sub-tab {
+        padding: 7px 11px;
+        font-size: 0.82rem;
+        border-radius: 10px;
+      }
+
+      /* Lưới từ vựng 1 cột tối ưu đọc trên màn hình nhỏ */
+      .vocab-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .vocab-card {
+        padding: 12px;
+      }
+      .vocab-jp {
+        font-size: 1.25rem;
+      }
+
+      /* Flashcard vừa khít màn hình điện thoại */
+      .flashcard-stage {
+        margin: 12px auto;
+      }
+      .flashcard-inner {
+        min-height: 210px;
+      }
+      .flashcard-face {
+        padding: 18px 14px;
+      }
+
+      /* Bảng chữ cái Kana: giữ đúng 5 cột chuẩn Gojūon trên mobile */
+      .kana-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 5px;
+      }
+      .kana-grid.yoon-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+      .kana-cell {
+        min-height: 66px;
+        padding: 6px 2px;
+        border-radius: 10px;
+        gap: 1px;
+      }
+      .kana-char {
+        font-size: 1.05rem;
+        letter-spacing: 0;
+      }
+      .kana-grid.yoon-grid .kana-char {
+        font-size: 1rem;
+      }
+      .kana-rom {
+        font-size: 0.68rem;
+      }
+      .kana-check-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 0.62rem;
+        top: 3px;
+        right: 3px;
+      }
+
+      /* Hội thoại bong bóng chat gọn hơn */
+      .chat-row {
+        gap: 8px;
+      }
+      .avatar-circle {
+        width: 34px;
+        height: 34px;
+        font-size: 0.82rem;
+      }
+      .chat-bubble {
+        padding: 10px 12px;
+      }
+
+      /* Ngữ pháp & Luyện tập */
+      .grammar-card {
+        padding: 14px 12px;
+      }
+      .grammar-formula {
+        font-size: 1.05rem;
+      }
+      .quiz-option {
+        padding: 11px 12px;
+        font-size: 0.92rem;
+      }
+
+      /* Modal danh sách 25 bài dạng bottom-sheet trên mobile */
+      .modal-backdrop {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .modal-box {
+        max-width: 100%;
+        max-height: 85vh;
+        max-height: 85dvh;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+      }
+
+      /* Bottom Nav Mobile */
+      .mobile-nav-item {
+        padding: 5px 4px;
+        font-size: 0.68rem;
+        min-width: 54px;
+      }
+    }
+  </style>
   </head>
   <body>
 
@@ -1473,7 +1683,6 @@
         // Tiến độ học tập
         masteredVocab: {}, // key: "1-わたし" -> true
         learnedKana: {},   // key: "hira-あ" hoặc "kata-ア" -> true
-        learnedKana: {},   // key: "hira-あ" hoặc "kata-ア" -> true
         leitnerBoxes: {},  // key: "1-わたし" -> 1..5
         completedLessons: [], // [1, 2, ...]
         quizStats: { total: 0, correct: 0, streak: 0 },
@@ -1660,8 +1869,8 @@
       }
 
       // Lấy toàn bộ dữ liệu từ Bài 1 đến Bài maxLesson
-      function getPoolUpToLesson(maxLesson) {
-        const available = LESSONS.filter(l => l.n <= maxLesson);
+      function getPoolUpToLesson(maxLesson, onlyLesson = false) {
+        const available = LESSONS.filter(l => onlyLesson ? l.n === maxLesson : l.n <= maxLesson);
         const vocabPool = [];
         const patternPool = [];
         const examplePool = [];
@@ -1684,9 +1893,26 @@
         return { vocabPool, patternPool, examplePool };
       }
 
-      function generatePracticeQuestions(maxLesson, count = 8, focusPatternId = null) {
-        const { vocabPool, patternPool, examplePool } = getPoolUpToLesson(maxLesson);
+      // Trợ từ dùng cho dạng câu "điền trợ từ" (không dùng lookbehind để chạy được trên Safari cũ)
+      const QUIZ_PARTICLES = ["は", "も", "の", "か", "を", "に", "へ", "で", "が"];
+
+      function findQuizParticle(jp) {
+        for (const p of QUIZ_PARTICLES) {
+          const regex = new RegExp(`([^\\s])${p}(?=\\s|。|、|$)`);
+          if (regex.test(jp)) return { p, regex };
+        }
+        return null;
+      }
+
+      // Chuẩn hóa câu cho dạng "sắp xếp từ": bỏ 。 và gộp khoảng trắng
+      function reorderClean(jp) {
+        return jp.replace(/。/g, " ").trim().split(/\s+/).join(" ");
+      }
+
+      function generatePracticeQuestions(maxLesson, count = 8, focusPatternId = null, onlyLesson = false) {
+        const { vocabPool, patternPool, examplePool } = getPoolUpToLesson(maxLesson, onlyLesson);
         const questions = [];
+        let retryGuard = 0; // Chặn vòng lặp vô hạn khi không tìm được ví dụ phù hợp
 
         if (vocabPool.length < 4) return questions;
 
@@ -1713,7 +1939,7 @@
                 type: "choice",
                 prompt: `Từ tiếng Nhật nào có nghĩa là: "${target.vi}"?`,
                 options: choices.map(c => c.kanji ? `${c.kanji} (${c.jp})` : c.jp),
-                answer: target.kanji ? `${c.kanji} (${c.jp})` : c.jp,
+                answer: target.kanji ? `${target.kanji} (${target.jp})` : target.jp,
                 vocabKey: target.key,
                 explain: `Bài ${target.lessonN} — Từ vựng: "${target.vi}" là ${target.kanji || target.jp}.`
               });
@@ -1724,7 +1950,7 @@
                 audioText: target.jp,
                 autoPlay: true,
                 options: choices.map(c => `${c.jp} — ${c.vi}`),
-                answer: `${c.jp} — ${c.vi}`,
+                answer: `${target.jp} — ${target.vi}`,
                 vocabKey: target.key,
                 explain: `Bài ${target.lessonN} — Âm thanh đọc là 「${target.jp}」 (${target.vi}).`
               });
@@ -1732,19 +1958,18 @@
           } else if (qType === "particle") {
             // Tìm câu ví dụ có trợ từ cơ bản (は, も, の, か, を, に, へ, で, が)
             const filteredEx = focusPatternId ? examplePool.filter(e => e.patternId === focusPatternId) : examplePool;
-            const pool = filteredEx.length > 0 ? filteredEx : examplePool;
+            const baseP = filteredEx.length > 0 ? filteredEx : examplePool;
+            const usableP = baseP.filter(e => findQuizParticle(e.jp));
+            const pool = usableP.length > 0 ? usableP : baseP;
             const ex = pool[i % pool.length];
-            const particles = ["は", "も", "の", "か", "を", "に", "へ", "で", "が"];
+            const particles = QUIZ_PARTICLES;
             let foundP = null;
             let blankSentence = ex.jp;
 
-            for (const p of particles) {
-              const regex = new RegExp(`(?<=[^\\s])${p}(?=\\s|。|、|$)`);
-              if (regex.test(ex.jp)) {
-                foundP = p;
-                blankSentence = ex.jp.replace(regex, " [ ___ ] ");
-                break;
-              }
+            const hit = findQuizParticle(ex.jp);
+            if (hit) {
+              foundP = hit.p;
+              blankSentence = ex.jp.replace(hit.regex, "$1 [ ___ ] ");
             }
 
             if (foundP) {
@@ -1757,14 +1982,17 @@
                 explain: `Bài ${ex.lessonN}, điểm ngữ pháp ${ex.patternId} (${ex.formula}): Câu đầy đủ là 「${ex.jp}」.`
               });
             } else {
+              if (++retryGuard > count * 3) break;
               i--; // Thử dạng khác
               continue;
             }
           } else if (qType === "reorder") {
             const filteredEx = focusPatternId ? examplePool.filter(e => e.patternId === focusPatternId) : examplePool;
-            const pool = filteredEx.length > 0 ? filteredEx : examplePool;
+            const baseR = filteredEx.length > 0 ? filteredEx : examplePool;
+            const multiR = baseR.filter(e => reorderClean(e.jp).split(" ").length >= 2);
+            const pool = multiR.length > 0 ? multiR : baseR;
             const ex = pool[i % pool.length];
-            const clean = ex.jp.replace(/。/g, "").trim();
+            const clean = reorderClean(ex.jp);
             const tokens = clean.split(/\s+/);
             if (tokens.length >= 2) {
               questions.push({
@@ -1776,6 +2004,7 @@
                 explain: `Bài ${ex.lessonN}, điểm ngữ pháp ${ex.patternId} (${ex.formula}): 「${ex.jp}」.`
               });
             } else {
+              if (++retryGuard > count * 3) break;
               i--;
             }
           } else {
@@ -1834,6 +2063,7 @@
         saveState();
         renderNavigation();
         renderMain();
+        window.scrollTo({ top: 0 });
       }
 
       function selectLesson(n) {
@@ -1841,10 +2071,12 @@
         state.currentLesson = n;
         state.flashcardIdx = 0;
         state.flashcardFlipped = false;
+        state.vocabTypeFilter = "all";
         document.getElementById("mobile-lesson-modal").classList.remove("open");
         saveState();
         renderNavigation();
         renderMain();
+        window.scrollTo({ top: 0 });
       }
 
       function renderMain() {
@@ -2400,7 +2632,9 @@
         score: 0,
         selectedTokens: [],
         answered: false,
-        title: ""
+        title: "",
+        mode: "",     // "practice" | "exam"
+        lessonN: 0
       };
 
       function practiceSpecificPattern(patternId) {
@@ -2411,20 +2645,24 @@
           score: 0,
           selectedTokens: [],
           answered: false,
-          title: `Luyện điểm ngữ pháp ${patternId}`
+          title: `Luyện điểm ngữ pháp ${patternId}`,
+          mode: "practice",
+          lessonN: state.currentLesson
         };
         renderLessonView();
       }
 
       function renderLessonPractice(container, lesson) {
-        if (activeQuiz.questions.length === 0) {
+        if (activeQuiz.questions.length === 0 || activeQuiz.mode !== "practice" || activeQuiz.lessonN !== lesson.n) {
           activeQuiz = {
             questions: generatePracticeQuestions(lesson.n, 8),
             index: 0,
             score: 0,
             selectedTokens: [],
             answered: false,
-            title: `Luyện tập tổng hợp Bài ${lesson.n}`
+            title: `Luyện tập tổng hợp Bài ${lesson.n}`,
+            mode: "practice",
+            lessonN: lesson.n
           };
         }
         renderQuizRunner(container, lesson.n, false);
@@ -2433,29 +2671,35 @@
       function renderLessonExam(container, lesson) {
         container.innerHTML = `
           <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
-            <button class="btn-primary" onclick="startExam(${lesson.n}, 12, 'Kiểm tra cuối Bài ${lesson.n}')">📝 Kiểm tra cuối Bài ${lesson.n} (12 câu)</button>
+            <button class="btn-primary" onclick="startExam(${lesson.n}, 12, 'Kiểm tra cuối Bài ${lesson.n}', true)">📝 Kiểm tra cuối Bài ${lesson.n} (12 câu)</button>
             <button class="btn-secondary" onclick="startExam(${lesson.n}, 15, 'Ôn tập tích lũy Bài 1 → ${lesson.n}')">🏔️ Ôn tập tích lũy Bài 1 → ${lesson.n} (15 câu)</button>
           </div>
           <div id="exam-stage"></div>
         `;
-        if (activeQuiz.questions.length > 0) {
+        if (activeQuiz.questions.length > 0 && activeQuiz.mode === "exam" && activeQuiz.lessonN === lesson.n) {
           renderQuizRunner(document.getElementById("exam-stage"), lesson.n, true);
         }
       }
 
-      function startExam(maxLesson, count, title) {
+      function startExam(maxLesson, count, title, onlyLesson = false) {
         activeQuiz = {
-          questions: generatePracticeQuestions(maxLesson, count),
+          questions: generatePracticeQuestions(maxLesson, count, null, onlyLesson),
           index: 0,
           score: 0,
           selectedTokens: [],
           answered: false,
-          title
+          title,
+          mode: "exam",
+          lessonN: maxLesson
         };
         renderLessonView();
       }
 
       function renderQuizRunner(container, lessonN, isExam) {
+        if (activeQuiz.questions.length === 0) {
+          container.innerHTML = `<p style="color: var(--text-secondary);">Chưa đủ dữ liệu để tạo câu hỏi cho bài này.</p>`;
+          return;
+        }
         if (activeQuiz.index >= activeQuiz.questions.length) {
           const pct = Math.round((activeQuiz.score / activeQuiz.questions.length) * 100);
           if (isExam && pct >= 80 && !state.completedLessons.includes(lessonN)) {
@@ -2612,7 +2856,7 @@
       function renderReferenceView() {
         mainEl.innerHTML = `
           <h2 class="serif-title" style="font-size: 1.45rem; margin-bottom: 6px;">Sổ Tay Tra Cứu Tổng Hợp</h2>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Bảng trợ từ, chia thể động từ, số đếm và thời gian (sẽ tự động mở rộng khi nạp thêm các bài sau).</p>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Bảng trợ từ, chia thể động từ, số đếm và thời gian (sẽ được bổ sung khi nạp thêm các bài sau).</p>
 
           <h3 class="serif-title" style="font-size: 1.15rem; margin: 16px 0 8px;">1. Bảng Trợ Từ Cơ Bản (Cập nhật đến Bài ${LESSONS.length})</h3>
           <div class="table-wrap">
@@ -3000,9 +3244,14 @@
           }
         });
 
+        let lastViewportWidth = window.innerWidth;
         window.addEventListener("resize", () => {
           resizeSnowCanvas();
-          initSnowflakes();
+          // Thanh địa chỉ trên điện thoại co giãn khi cuộn chỉ đổi chiều cao: không làm lại tuyết
+          if (window.innerWidth !== lastViewportWidth) {
+            lastViewportWidth = window.innerWidth;
+            initSnowflakes();
+          }
         });
       });
     </script>
